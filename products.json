@@ -6,10 +6,10 @@
             {
                 "id": "sulphur_extractor",
                 "requires": [],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 8
             }
-        ],
-        "amountProduced": 8
+        ]
     },
     {
         "id": "wolframOre",
@@ -19,16 +19,17 @@
                 "id": "miner_basic",
                 "name": "Miner",
                 "requires": [],
-                "takesTime": 1
+                "takesTime": 1,
+                "amountProduced": 1
             },
             {
                 "id": "miner_advanced",
                 "name": "Advanced Miner",
                 "requires": [],
-                "takesTime": 0.1
+                "takesTime": 0.1,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "calciumOre",
@@ -38,16 +39,17 @@
                 "id": "miner_basic",
                 "name": "Miner",
                 "requires": [],
-                "takesTime": 1
+                "takesTime": 1,
+                "amountProduced": 1
             },
             {
                 "id": "miner_advanced",
                 "name": "Advanced Miner",
                 "requires": [],
-                "takesTime": 0.1
+                "takesTime": 1,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "titaniumOre",
@@ -56,15 +58,16 @@
             {
                 "id": "miner_basic",
                 "requires": [],
-                "takesTime": 1
+                "takesTime": 1,
+                "amountProduced": 1
             },
             {
                 "id": "miner_advanced",
                 "requires": [],
-                "takesTime": 0.1
+                "takesTime": 0.1,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "basicBuildingMaterial",
@@ -82,10 +85,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 10
+        ]
     },
     {
         "id": "calciumBlock",
@@ -99,10 +102,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "intermediateBuildingMaterial",
@@ -128,10 +131,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 25
             }
-        ],
-        "amountProduced": 25
+        ]
     },
     {
         "id": "titaniumBar",
@@ -145,10 +148,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "wolframBar",
@@ -162,10 +165,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "calciteSheets",
@@ -179,10 +182,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "calciumPowder",
@@ -196,10 +199,21 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 3
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "calciumBlock",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 3,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 3
+        ]
     },
     {
         "id": "titaniumBeam",
@@ -213,10 +227,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 3
             }
-        ],
-        "amountProduced": 3
+        ]
     },
     {
         "id": "titaniumRod",
@@ -230,10 +244,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "titaniumSheet",
@@ -247,10 +261,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "wolframPowder",
@@ -264,10 +278,21 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 3
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 3
+        ]
     },
     {
         "id": "wolframWire",
@@ -281,10 +306,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "ceramics",
@@ -302,10 +327,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "glass",
@@ -323,10 +348,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "helium3",
@@ -335,10 +360,10 @@
             {
                 "id": "helium_extractor",
                 "requires": [],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 8
             }
-        ],
-        "amountProduced": 8
+        ]
     },
     {
         "id": "rotor",
@@ -356,10 +381,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "titaniumHousing",
@@ -377,10 +402,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "tube",
@@ -398,10 +423,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "wolframPlate",
@@ -415,10 +440,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "chemicals",
@@ -440,7 +465,8 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             },
             {
                 "id": "furnace_advanced",
@@ -462,10 +488,10 @@
                         "quantity": 4
                     }
                 ],
-                "takesTime": 1
+                "takesTime": 1,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "heatResistantSheet",
@@ -487,10 +513,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "stabilizer",
@@ -508,10 +534,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "stator",
@@ -529,10 +555,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "syntheticSilicon",
@@ -554,10 +580,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "applicator",
@@ -575,10 +601,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "electronics",
@@ -600,10 +626,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "inductor",
@@ -625,10 +651,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "turbine",
@@ -650,10 +676,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "valve",
@@ -679,10 +705,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "battery",
@@ -704,10 +730,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "hardeningAgent",
@@ -729,10 +755,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "impeller",
@@ -758,10 +784,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "nozzle",
@@ -783,10 +809,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "pressurizedHelium",
@@ -804,10 +830,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "sulphuricAcid",
@@ -825,10 +851,10 @@
                         "quantity": 4
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 4
             }
-        ],
-        "amountProduced": 4
+        ]
     },
     {
         "id": "supermagnet",
@@ -850,10 +876,10 @@
                         "quantity": 4
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "accumulator",
@@ -875,10 +901,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "electromagneticCoil",
@@ -904,10 +930,10 @@
                         "quantity": 6
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "generator",
@@ -929,10 +955,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "liquidHelium",
@@ -950,10 +976,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "pressureTank",
@@ -975,10 +1001,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "syntheticFertilizer",
@@ -996,10 +1022,10 @@
                         "quantity": 5
                     }
                 ],
-                "takesTime": 8
+                "takesTime": 8,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "syntheticResin",
@@ -1021,10 +1047,10 @@
                         "quantity": 3
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "geothiteIngot",
@@ -1038,10 +1064,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 10
+        ]
     },
     {
         "id": "geothiteLattice",
@@ -1063,10 +1089,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "geothiteOre",
@@ -1075,10 +1101,10 @@
             {
                 "id": "laser_drill",
                 "requires": [],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "geothitePowder",
@@ -1100,10 +1126,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 2
+                "takesTime": 2,
+                "amountProduced": 4
             }
-        ],
-        "amountProduced": 4
+        ]
     },
     {
         "id": "lens",
@@ -1125,10 +1151,10 @@
                         "quantity": 4
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "pump",
@@ -1154,10 +1180,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "resonator",
@@ -1179,10 +1205,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "superconductor",
@@ -1204,10 +1230,10 @@
                         "quantity": 6
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "titanoferriteIngot",
@@ -1225,10 +1251,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 10
+        ]
     },
     {
         "id": "universalSpaceSoil",
@@ -1246,10 +1272,10 @@
                         "quantity": 10
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "wolframSteelIngot",
@@ -1267,10 +1293,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 10
+        ]
     },
     {
         "id": "aerogel",
@@ -1292,10 +1318,10 @@
                         "quantity": 6
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "basicFuel",
@@ -1317,10 +1343,10 @@
                         "quantity": 4
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "crudeOil",
@@ -1329,10 +1355,10 @@
             {
                 "id": "oil_extractor",
                 "requires": [],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "electromagnet",
@@ -1354,10 +1380,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "epoxy",
@@ -1379,10 +1405,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 3
+                "takesTime": 3,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "ionInjector",
@@ -1404,10 +1430,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 12
+                "takesTime": 12,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "laserEmitter",
@@ -1429,10 +1455,10 @@
                         "quantity": 6
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "nanoFibre",
@@ -1454,10 +1480,10 @@
                         "quantity": 8
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 2
             }
-        ],
-        "amountProduced": 2
+        ]
     },
     {
         "id": "organicCompound",
@@ -1479,10 +1505,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 3
             }
-        ],
-        "amountProduced": 3
+        ]
     },
     {
         "id": "plastic",
@@ -1504,10 +1530,10 @@
                         "quantity": 1
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 5
             }
-        ],
-        "amountProduced": 5
+        ]
     },
     {
         "id": "refinedOil",
@@ -1529,10 +1555,10 @@
                         "quantity": 12
                     }
                 ],
-                "takesTime": 6
+                "takesTime": 6,
+                "amountProduced": 10
             }
-        ],
-        "amountProduced": 10
+        ]
     },
     {
         "id": "reinforcedFrame",
@@ -1554,10 +1580,10 @@
                         "quantity": 2
                     }
                 ],
-                "takesTime": 5
+                "takesTime": 5,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "reinforcedHousing",
@@ -1579,10 +1605,10 @@
                         "quantity": 3
                     }
                 ],
-                "takesTime": 4
+                "takesTime": 4,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     },
     {
         "id": "scanner",
@@ -1604,9 +1630,9 @@
                         "quantity": 12
                     }
                 ],
-                "takesTime": 10
+                "takesTime": 10,
+                "amountProduced": 1
             }
-        ],
-        "amountProduced": 1
+        ]
     }
 ]

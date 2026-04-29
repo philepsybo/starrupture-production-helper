@@ -247,7 +247,7 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         
         // How many units can this facility produce in the available time?
         // (cycles × amountProduced per cycle)
-        const amountPerCycle = product.amountProduced || 1;
+        const amountPerCycle = facility.amountProduced || 1;
         const unitsPerFacility = cycles * amountPerCycle;
         
         if (unitsPerFacility <= 0) {
@@ -291,7 +291,7 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         chosenFacility.requires.forEach(req => {
             // Account for amountProduced: if we need 200 powder but each cycle makes 3,
             // we only need ceil(200/3) amounts of the input, not 200
-            const amountPerCycle = product.amountProduced || 1;
+            const amountPerCycle = chosenFacility.amountProduced || 1;
             const recipesNeeded = Math.ceil(quantity / amountPerCycle);
             const totalNeeded = req.quantity * recipesNeeded;
             
@@ -541,7 +541,7 @@ function calculateFacilitiesFromAllocations(allocations, timeAvailable, result) 
             // Calculate facility count for each alternative
             const alternatives = product.producedIn.map(facility => {
                 const cycles = timeAvailable / facility.takesTime;
-                const amountPerCycle = product.amountProduced || 1;
+                const amountPerCycle = facility.amountProduced || 1;
                 const unitsPerFacility = cycles * amountPerCycle;
                 const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
                 
@@ -582,7 +582,7 @@ function calculateFacilitiesFromAllocations(allocations, timeAvailable, result) 
                 const facilityName = getFacilityName(facilityId);
                 
                 const cycles = timeAvailable / facility.takesTime;
-                const amountPerCycle = product.amountProduced || 1;
+                const amountPerCycle = facility.amountProduced || 1;
                 const unitsPerFacility = cycles * amountPerCycle;
                 const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
                 
@@ -739,7 +739,7 @@ function buildProductAllocationView(result, allocations) {
             if (product.producedIn.length > 1) {
                 const alternatives = product.producedIn.map(facility => {
                     const cycles = result.timeAvailable / facility.takesTime;
-                    const amountPerCycle = product.amountProduced || 1;
+                    const amountPerCycle = facility.amountProduced || 1;
                     const unitsPerFacility = cycles * amountPerCycle;
                     const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
                     
@@ -765,7 +765,7 @@ function buildProductAllocationView(result, allocations) {
                 // Single facility option
                 product.producedIn.forEach(facility => {
                     const cycles = result.timeAvailable / facility.takesTime;
-                    const amountPerCycle = product.amountProduced || 1;
+                    const amountPerCycle = facility.amountProduced || 1;
                     const unitsPerFacility = cycles * amountPerCycle;
                     const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
                     
