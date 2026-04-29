@@ -33,5 +33,35 @@
         "id": "helium_extractor",
         "name": "Helium Extractor",
         "description": "Helium-3 extraction facility"
+    },
+    {
+        "id": "assembler",
+        "name": "Assembler",
+        "description": "Precision assembly facility"
+    },
+    {
+        "id": "compounder",
+        "name": "Compounder",
+        "description": "Compound processing facility"
+    },
+    {
+        "id": "pyro_forge",
+        "name": "Pyro Forge",
+        "description": "High-temperature processing facility"
+    },
+    {
+        "id": "laser_drill",
+        "name": "Laser Drill",
+        "description": "High-precision ore extraction facility"
+    },
+    {
+        "id": "constructorizer_advanced",
+        "name": "Advanced Constructorizer",
+        "description": "High-precision construction facility"
+    },
+    {
+        "id": "pressurizer",
+        "name": "Pressurizer",
+        "description": "Pressurization facility"
     }
 ]

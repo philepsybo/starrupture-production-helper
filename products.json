@@ -407,5 +407,1022 @@
             }
         ],
         "amountProduced": 2
-    }
+    },
+    {
+        "id": "chemicals",
+        "name": "Chemicals",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "syntheticSilicon",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "heatResistantSheet",
+        "name": "Heat Resistant Sheet",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumSheet",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "glass",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "stabilizer",
+        "name": "Stabilizer",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "rotor",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "stator",
+        "name": "Stator",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "titaniumHousing",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "syntheticSilicon",
+        "name": "Synthetic Silicon",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "calciumPowder",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "ceramics",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "applicator",
+        "name": "Applicator",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "tube",
+                        "quantity": 8
+                    },
+                    {
+                        "productId": "glass",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "electronics",
+        "name": "Electronics",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "syntheticSilicon",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "stator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "inductor",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "inductor",
+        "name": "Inductor",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "tube",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "ceramics",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "turbine",
+        "name": "Turbine",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "impeller",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "stator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "rotor",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "valve",
+        "name": "Valve",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "titaniumHousing",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumBeam",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "nozzle",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "battery",
+        "name": "Battery",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "inductor",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "electronics",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "hardeningAgent",
+        "name": "Hardening Agent",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 5
+                    },
+                    {
+                        "productId": "syntheticSilicon",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "applicator",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "impeller",
+        "name": "Impeller",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "heatResistantSheet",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "stabilizer",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "nozzle",
+        "name": "Nozzle",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "heatResistantSheet",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 6
+                    },
+                    {
+                        "productId": "stabilizer",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "pressurizedHelium",
+        "name": "Pressurized Helium",
+        "producedIn": [
+            {
+                "id": "pressurizer",
+                "requires": [
+                    {
+                        "productId": "helium3",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "sulphurOre",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "sulphuricAcid",
+        "name": "Sulphuric Acid",
+        "producedIn": [
+            {
+                "id": "pressurizer",
+                "requires": [
+                    {
+                        "productId": "sulphurOre",
+                        "quantity": 8
+                    },
+                    {
+                        "productId": "chemicals",
+                        "quantity": 4
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 4
+    },
+    {
+        "id": "supermagnet",
+        "name": "Supermagnet",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "chemicals",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 4
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "accumulator",
+        "name": "Accumulator",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "electronics",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "stator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "battery",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "electromagneticCoil",
+        "name": "Electromagnetic Coil",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "inductor",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "pressurizedHelium",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "supermagnet",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 6
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "generator",
+        "name": "Generator",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "turbine",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "battery",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "nozzle",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "liquidHelium",
+        "name": "Liquid Helium",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "pressurizedHelium",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "hardeningAgent",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "pressureTank",
+        "name": "Pressure Tank",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "heatResistantSheet",
+                        "quantity": 5
+                    },
+                    {
+                        "productId": "pump",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "valve",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "syntheticFertilizer",
+        "name": "Synthetic Fertilizer",
+        "producedIn": [
+            {
+                "id": "undefined",
+                "requires": [
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 8
+                    },
+                    {
+                        "productId": "plasticDust",
+                        "quantity": 5
+                    }
+                ],
+                "takesTime": 8
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "syntheticResin",
+        "name": "Synthetic Resin",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "hardeningAgent",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "calciteSheets",
+                        "quantity": 6
+                    },
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 3
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "geothiteIngot",
+        "name": "Geothite Ingot",
+        "producedIn": [
+            {
+                "id": "pyro_forge",
+                "requires": [
+                    {
+                        "productId": "geothiteOre",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 10
+    },
+    {
+        "id": "geothiteLattice",
+        "name": "Geothite Lattice",
+        "producedIn": [
+            {
+                "id": "pyro_forge",
+                "requires": [
+                    {
+                        "productId": "geothiteIngot",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "titanoferriteIngot",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframSteelIngot",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "geothiteOre",
+        "name": "Geothite Ore",
+        "producedIn": [
+            {
+                "id": "laser_drill",
+                "requires": [],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "geothitePowder",
+        "name": "Geothite Powder",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "geothiteIngot",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "pressurizedHelium",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "calciumPowder",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 4
+    },
+    {
+        "id": "lens",
+        "name": "Lens",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "glass",
+                        "quantity": 10
+                    },
+                    {
+                        "productId": "hardeningAgent",
+                        "quantity": 6
+                    },
+                    {
+                        "productId": "syntheticResin",
+                        "quantity": 4
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "pump",
+        "name": "Pump",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "valve",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "turbine",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "impeller",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "resonator",
+        "name": "Resonator",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "accumulator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "generator",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "superconductor",
+        "name": "Superconductor",
+        "producedIn": [
+            {
+                "id": "constructorizer_advanced",
+                "requires": [
+                    {
+                        "productId": "syntheticResin",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "electromagnet",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "supermagnet",
+                        "quantity": 6
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "titanoferriteIngot",
+        "name": "Titanoferrite Ingot",
+        "producedIn": [
+            {
+                "id": "pyro_forge",
+                "requires": [
+                    {
+                        "productId": "titaniumOre",
+                        "quantity": 10
+                    },
+                    {
+                        "productId": "geothiteOre",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 10
+    },
+    {
+        "id": "universalSpaceSoil",
+        "name": "Universal Space Soil",
+        "producedIn": [
+            {
+                "id": "undefined",
+                "requires": [
+                    {
+                        "productId": "syntheticFertilizer",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "geothitePowder",
+                        "quantity": 10
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "wolframSteelIngot",
+        "name": "Wolfram Steel Ingot",
+        "producedIn": [
+            {
+                "id": "pyro_forge",
+                "requires": [
+                    {
+                        "productId": "wolframOre",
+                        "quantity": 10
+                    },
+                    {
+                        "productId": "geothiteOre",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 10
+    },
+    {
+        "id": "aerogel",
+        "name": "Aerogel",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "geothitePowder",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "calciumPowder",
+                        "quantity": 6
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "basicFuel",
+        "name": "Basic Fuel",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "geothitePowder",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 4
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "crudeOil",
+        "name": "Crude Oil",
+        "producedIn": [
+            {
+                "id": "oil_extractor",
+                "requires": [],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "electromagnet",
+        "name": "Electromagnet",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "electromagneticCoil",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "syntheticResin",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "accumulator",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "epoxy",
+        "name": "Epoxy",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "geothitePowder",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "syntheticResin",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "ionInjector",
+        "name": "Ion Injector",
+        "producedIn": [
+            {
+                "id": "constructorizer_advanced",
+                "requires": [
+                    {
+                        "productId": "applicator",
+                        "quantity": 8
+                    },
+                    {
+                        "productId": "electromagnet",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "pressureTank",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 12
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "laserEmitter",
+        "name": "Laser Emitter",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "lens",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "resonator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "electromagneticCoil",
+                        "quantity": 6
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "nanoFibre",
+        "name": "Nano Fibre",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "tube",
+                        "quantity": 20
+                    },
+                    {
+                        "productId": "liquidHelium",
+                        "quantity": 5
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 8
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 2
+    },
 ]
