@@ -298,7 +298,7 @@ function buildProductAllocationView(result) {
     const allocations = {};
     
     // Walk through the tree and collect product flows
-    function collectAllocations(node, parentProduct = null) {
+    function collectAllocations(node) {
         // For each dependency of this node
         Object.entries(node.dependencies || {}).forEach(([depId, dep]) => {
             const productName = dep.result.productName;
@@ -309,16 +309,38 @@ function buildProductAllocationView(result) {
                 allocations[productName] = {
                     totalQuantity: 0,
                     consumers: {},
-                    producers: dep.result.facilities
+                    producers: dep.result.facilities,
+                    dependencies: dep.result.dependencies  // Track what this product depends on
                 };
             }
             
             allocations[productName].totalQuantity += quantity;
             
             if (!allocations[productName].consumers[consumer]) {
-                allocations[productName].consumers[consumer] = 0;
+                allocations[productName].consumers[consumer] = {
+                    amount: 0,
+                    facilities: []
+                };
             }
-            allocations[productName].consumers[consumer] += quantity;
+            allocations[productName].consumers[consumer].amount += quantity;
+            
+            // Find which facilities in the consumer product use this intermediate product
+            node.facilities.forEach(facility => {
+                facility.requirements?.forEach(req => {
+                    if (req.productId === depId) {
+                        const facilityInfo = {
+                            id: facility.id,
+                            name: getFacilityName(facility.id),
+                            count: facility.facilitiesNeeded
+                        };
+                        
+                        const existing = allocations[productName].consumers[consumer].facilities.find(f => f.id === facility.id);
+                        if (!existing) {
+                            allocations[productName].consumers[consumer].facilities.push(facilityInfo);
+                        }
+                    }
+                });
+            });
             
             // Recursively collect from dependencies
             collectAllocations(dep.result);
@@ -331,12 +353,54 @@ function buildProductAllocationView(result) {
         return '';
     }
     
+    // Calculate depth for each product (distance from raw materials)
+    const depthCache = {};
+    function calculateDepth(productName) {
+        if (depthCache[productName] !== undefined) {
+            return depthCache[productName];
+        }
+        
+        const alloc = allocations[productName];
+        
+        // If no dependencies, it's a raw material (depth 0)
+        if (!alloc.dependencies || Object.keys(alloc.dependencies).length === 0) {
+            depthCache[productName] = 0;
+            return 0;
+        }
+        
+        // Otherwise, depth = 1 + max depth of dependencies (that are in allocations)
+        let maxDepDependencyDepth = -1;
+        Object.entries(alloc.dependencies).forEach(([depId, depData]) => {
+            const depProductName = depData.result.productName;
+            if (allocations[depProductName]) {
+                const depDepth = calculateDepth(depProductName);
+                maxDepDependencyDepth = Math.max(maxDepDependencyDepth, depDepth);
+            }
+        });
+        
+        // If dependencies exist but not in allocations, treat as depth 0
+        const depth = maxDepDependencyDepth === -1 ? 0 : maxDepDependencyDepth + 1;
+        depthCache[productName] = depth;
+        return depth;
+    }
+    
+    // Calculate depth for all products
+    Object.keys(allocations).forEach(productName => {
+        allocations[productName].depth = calculateDepth(productName);
+    });
+    
     let html = '<h3>Product Flow & Distribution</h3>';
     html += '<p class="allocation-description">How intermediate products flow through the production chain</p>';
     html += '<div class="allocation-container">';
     
-    // Sort by total quantity needed (descending)
-    const sortedAllocations = Object.entries(allocations).sort((a, b) => b[1].totalQuantity - a[1].totalQuantity);
+    // Sort by depth (ascending - raw materials first), then by quantity
+    const sortedAllocations = Object.entries(allocations)
+        .sort((a, b) => {
+            if (a[1].depth !== b[1].depth) {
+                return a[1].depth - b[1].depth;  // Raw materials (lower depth) first
+            }
+            return b[1].totalQuantity - a[1].totalQuantity;  // Then by quantity
+        });
     
     sortedAllocations.forEach(([productName, alloc]) => {
         const percent = (amount, total) => ((amount / total) * 100).toFixed(1);
@@ -363,13 +427,22 @@ function buildProductAllocationView(result) {
         html += `<div class="consumer-breakdown">`;
         
         Object.entries(alloc.consumers)
-            .sort((a, b) => b[1] - a[1])
-            .forEach(([consumer, amount]) => {
-                const pct = percent(amount, alloc.totalQuantity);
+            .sort((a, b) => b[1].amount - a[1].amount)
+            .forEach(([consumer, consumerData]) => {
+                const pct = percent(consumerData.amount, alloc.totalQuantity);
                 html += `<div class="consumer-item">`;
                 html += `<div class="consumer-info">`;
                 html += `<span class="consumer-name">${consumer}</span>`;
-                html += `<span class="consumer-amount">${amount.toFixed(1)} units (${pct}%)</span>`;
+                html += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units (${pct}%)</span>`;
+                
+                // Show which facilities consume this product
+                if (consumerData.facilities.length > 0) {
+                    html += `<div class="consumer-facilities">`;
+                    consumerData.facilities.forEach(fac => {
+                        html += `<span class="consumer-facility-badge">${fac.name} (×${fac.count})</span>`;
+                    });
+                    html += `</div>`;
+                }
                 html += `</div>`;
                 html += `<div class="consumer-bar">`;
                 html += `<div class="consumer-bar-fill" style="width: ${pct}%"></div>`;

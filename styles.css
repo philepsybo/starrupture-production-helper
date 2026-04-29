@@ -246,10 +246,11 @@ input:focus, select:focus {
 }
 
 .consumer-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: start;
 }
 
 .consumer-name {
@@ -265,6 +266,25 @@ input:focus, select:focus {
     border-radius: 3px;
     font-size: 0.8em;
     font-weight: 600;
+    white-space: nowrap;
+}
+
+.consumer-facilities {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.consumer-facility-badge {
+    background: #f0f0f0;
+    border: 1px solid #d0d0d0;
+    color: #666;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.75em;
+    font-weight: 500;
 }
 
 .consumer-bar {
