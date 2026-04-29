@@ -445,6 +445,7 @@ function displayResults(result, productId) {
 // Build product allocations data structure (helper for displayResults)
 function buildProductAllocations(result) {
     const allocations = {};
+    const facilityMap = {}; // Track facility requirements for later calculation
     
     function collectAllocations(node) {
         Object.entries(node.dependencies || {}).forEach(([depId, dep]) => {
@@ -470,19 +471,19 @@ function buildProductAllocations(result) {
             }
             allocations[productName].consumers[consumer].amount += quantity;
             
-            // Find which facilities consume this product
+            // Find which facilities consume this product - record them for later count calculation
             node.facilities.forEach(facility => {
                 facility.requirements?.forEach(req => {
                     if (req.productId === depId) {
-                        const facilityInfo = {
-                            id: facility.id,
-                            name: getFacilityName(facility.id),
-                            count: facility.facilitiesNeeded
-                        };
-                        
-                        const existing = allocations[productName].consumers[consumer].facilities.find(f => f.id === facility.id);
-                        if (!existing) {
-                            allocations[productName].consumers[consumer].facilities.push(facilityInfo);
+                        // Record facility relationship for later calculation when all amounts are known
+                        const key = `${productName}|${consumer}|${facility.id}`;
+                        if (!facilityMap[key]) {
+                            facilityMap[key] = {
+                                productName: productName,
+                                consumer: consumer,
+                                facility: facility,
+                                req: req
+                            };
                         }
                     }
                 });
@@ -493,6 +494,37 @@ function buildProductAllocations(result) {
     }
     
     collectAllocations(result);
+    
+    // Second pass: Calculate facility counts based on final accumulated amounts
+    Object.entries(facilityMap).forEach(([, data]) => {
+        const consumerAmount = allocations[data.productName].consumers[data.consumer].amount;
+        
+        // Recalculate unitsPerFacility for this facility
+        // This is how much output (consumer product) one facility can make in the time window
+        const cycles = result.timeAvailable / data.facility.takesTime;
+        const amountPerCycle = data.facility.amountProduced || 1;
+        const outputPerFacility = cycles * amountPerCycle;
+        
+        // Input needed per unit of output
+        const inputPerOutputUnit = data.req.quantity;
+        
+        // Total input capacity per facility
+        const inputCapacityPerFacility = outputPerFacility * inputPerOutputUnit;
+        
+        // How many of this facility needed to satisfy the input amount
+        const facilitiesNeededForThisInput = inputCapacityPerFacility > 0 
+            ? Math.ceil(consumerAmount / inputCapacityPerFacility)
+            : 0;
+        
+        const facilityInfo = {
+            id: data.facility.id,
+            name: getFacilityName(data.facility.id),
+            count: facilitiesNeededForThisInput
+        };
+        
+        allocations[data.productName].consumers[data.consumer].facilities.push(facilityInfo);
+    });
+    
     return allocations;
 }
 
