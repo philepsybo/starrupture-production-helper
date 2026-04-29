@@ -1,0 +1,97 @@
+[
+    {
+        "id": "unknown",
+        "name": "Unknown Facility",
+        "description": "Needs further research to identify in future"
+    },
+    {
+        "id": "miner_basic",
+        "name": "Miner",
+        "description": "Basic ore extraction facility"
+    },
+    {
+        "id": "miner_advanced",
+        "name": "Advanced Miner",
+        "description": "High-speed ore extraction facility"
+    },
+    {
+        "id": "fabricator",
+        "name": "Fabricator",
+        "description": "Precision crafting and assembly facility"
+    },
+    {
+        "id": "fabricator_advanced",
+        "name": "Advanced Fabricator",
+        "description": "High-precision crafting and assembly facility"
+    },
+    {
+        "id": "smelter",
+        "name": "Smelter",
+        "description": "Ore refining and bar production facility"
+    },
+    {
+        "id": "furnace",
+        "name": "Furnace",
+        "description": "High-temperature processing facility"
+    },
+    {
+        "id": "mega_press",
+        "name": "Mega Press",
+        "description": "Heavy-duty compression and assembly facility"
+    },
+    {
+        "id": "helium_extractor",
+        "name": "Helium Extractor",
+        "description": "Helium-3 extraction facility"
+    },
+    {
+        "id": "assembler",
+        "name": "Assembler",
+        "description": "Precision assembly facility"
+    },
+    {
+        "id": "compounder",
+        "name": "Compounder",
+        "description": "Compound processing facility"
+    },
+    {
+        "id": "pyro_forge",
+        "name": "Pyro Forge",
+        "description": "High-temperature processing facility"
+    },
+    {
+        "id": "laser_drill",
+        "name": "Laser Drill",
+        "description": "High-precision ore extraction facility"
+    },
+    {
+        "id": "constructorizer_advanced",
+        "name": "Advanced Constructorizer",
+        "description": "High-precision construction facility"
+    },
+    {
+        "id": "refinery",
+        "name": "Refinery",
+        "description": "Advanced oil refining facility"
+    },
+    {
+        "id": "sulphur_extractor",
+        "name": "Sulphur Extractor",
+        "description": "Advanced sulphur extraction facility"
+    },
+    {
+        "id": "oil_extractor",
+        "name": "Oil Extractor",
+        "description": "Advanced oil extraction facility"
+    },
+    {
+        "id": "furnace_advanced",
+        "name": "Advanced Furnace",
+        "description": "High-temperature processing facility"
+    },
+    {
+        "id": "pressurizer",
+        "name": "Pressurizer",
+        "description": "Pressurization facility"
+    }
+]
