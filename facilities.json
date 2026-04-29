@@ -20,6 +20,11 @@
         "description": "Precision crafting and assembly facility"
     },
     {
+        "id": "fabricator_advanced",
+        "name": "Advanced Fabricator",
+        "description": "High-precision crafting and assembly facility"
+    },
+    {
         "id": "smelter",
         "name": "Smelter",
         "description": "Ore refining and bar production facility"

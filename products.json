@@ -246,6 +246,17 @@
                 ],
                 "takesTime": 2,
                 "amountProduced": 1
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "titaniumBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 4
             }
         ]
     },
@@ -263,6 +274,17 @@
                 ],
                 "takesTime": 2,
                 "amountProduced": 2
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "titaniumBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 6
             }
         ]
     },
@@ -308,6 +330,17 @@
                 ],
                 "takesTime": 4,
                 "amountProduced": 2
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 4,
+                "amountProduced": 8
             }
         ]
     },
@@ -329,6 +362,25 @@
                 ],
                 "takesTime": 2,
                 "amountProduced": 2
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "calciteSheets",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 4
             }
         ]
     },
@@ -350,6 +402,25 @@
                 ],
                 "takesTime": 3,
                 "amountProduced": 1
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "pressurizedHelium",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "calciteSheets",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "geothiteIngot",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3,
+                "amountProduced": 4
             }
         ]
     },
@@ -383,6 +454,25 @@
                 ],
                 "takesTime": 6,
                 "amountProduced": 1
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 6,
+                "amountProduced": 6
             }
         ]
     },
@@ -425,6 +515,25 @@
                 ],
                 "takesTime": 2,
                 "amountProduced": 2
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "geothiteIngot",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumSheet",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 8
             }
         ]
     },
@@ -442,6 +551,21 @@
                 ],
                 "takesTime": 2,
                 "amountProduced": 2
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2,
+                "amountProduced": 5
             }
         ]
     },
@@ -515,6 +639,25 @@
                 ],
                 "takesTime": 4,
                 "amountProduced": 1
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "titanoferriteIngot",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframSteelIngot",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 3
+                    }
+                ],
+                "takesTime": 4,
+                "amountProduced": 5
             }
         ]
     },
@@ -557,6 +700,25 @@
                 ],
                 "takesTime": 3,
                 "amountProduced": 1
+            },
+            {
+                "id": "fabricator_advanced",
+                "requires": [
+                    {
+                        "productId": "titaniumHousing",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumSheet",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3,
+                "amountProduced": 3
             }
         ]
     },
@@ -757,6 +919,29 @@
                 ],
                 "takesTime": 4,
                 "amountProduced": 2
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "syntheticSilicon",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "applicator",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "pressurizedHelium",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4,
+                "amountProduced": 5
             }
         ]
     },
