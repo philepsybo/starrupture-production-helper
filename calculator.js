@@ -271,10 +271,24 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         facilitiesNeeded.push(facilityCost);
     });
 
-    // Calculate dependencies once, based on total quantity needed
-    // All facility alternatives produce the same product, so sum their requirements
-    product.producedIn?.forEach(facility => {
-        facility.requires?.forEach(req => {
+    // If multiple facility options exist, pick the best one (fewest facilities needed)
+    // and calculate dependencies based only on that option, not all of them
+    let chosenFacility = null;
+    
+    if (product.producedIn && product.producedIn.length > 1 && facilitiesNeeded.length > 0) {
+        // Find the facility option that needs the fewest facilities
+        const best = facilitiesNeeded.reduce((prev, curr) => 
+            curr.facilitiesNeeded < prev.facilitiesNeeded ? curr : prev
+        );
+        chosenFacility = product.producedIn.find(f => f.id === best.id);
+    } else if (product.producedIn && product.producedIn.length === 1) {
+        // Single option, use it
+        chosenFacility = product.producedIn[0];
+    }
+
+    // Calculate dependencies based on the chosen facility (not all alternatives)
+    if (chosenFacility && chosenFacility.requires) {
+        chosenFacility.requires.forEach(req => {
             // Account for amountProduced: if we need 200 powder but each cycle makes 3,
             // we only need ceil(200/3) amounts of the input, not 200
             const amountPerCycle = product.amountProduced || 1;
@@ -287,10 +301,10 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
                     facilities: []
                 };
             }
-            // Sum requirements across all facility alternatives
-            dependenciesMap[req.productId].quantity += totalNeeded;
+            // Use only the chosen facility's requirements
+            dependenciesMap[req.productId].quantity = totalNeeded;
         });
-    });
+    }
 
     // Recursively calculate dependencies
     Object.keys(dependenciesMap).forEach(depProductId => {
@@ -305,6 +319,7 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         requestedQuantity: quantity,
         timeAvailable: timeAvailable,
         facilities: facilitiesNeeded,
+        chosenFacility: chosenFacility,
         dependencies: dependenciesMap,
         feasible: isFeasible && product.producedIn?.length > 0
     };
@@ -382,9 +397,17 @@ function displayResults(result, productId) {
     facilitiesHTML += '</div>';
     
     // Facilities breakdown by product
-    facilitiesHTML += '<h3>Facilities by Product</h3>';
+    facilitiesHTML += '<h3>Final stage facilities</h3>';
     facilitiesHTML += '<div class="facilities-list">';
-    result.facilities.forEach(facility => {
+    
+    // Filter to show only the best facility option (fewest needed) when there are alternatives
+    const facilitiesToDisplay = result.facilities.length > 1 
+        ? [result.facilities.reduce((prev, curr) => 
+            curr.facilitiesNeeded < prev.facilitiesNeeded ? curr : prev
+        )]
+        : result.facilities;
+    
+    facilitiesToDisplay.forEach(facility => {
         const facilityDef = facilitiesData.find(f => f.id === facility.id);
         const facilityName = facilityDef ? facilityDef.name : facility.name;
         facilitiesHTML += `
@@ -477,9 +500,19 @@ function buildProductAllocations(result) {
 function calculateFacilitiesFromAllocations(allocations, timeAvailable, result) {
     const facilities = {};
     
-    // First, include the top-level product's facilities
-    if (result && result.facilities) {
-        result.facilities.forEach(facility => {
+    // For the top-level product, if it has multiple facility options, pick the best one
+    if (result && result.facilities && result.facilities.length > 0) {
+        let facilitiesToAdd = result.facilities;
+        
+        // If multiple options exist, pick the one needing fewest facilities
+        if (result.facilities.length > 1) {
+            const best = result.facilities.reduce((prev, curr) => 
+                curr.facilitiesNeeded < prev.facilitiesNeeded ? curr : prev
+            );
+            facilitiesToAdd = [best];
+        }
+        
+        facilitiesToAdd.forEach(facility => {
             const facilityId = facility.id;
             if (!facilities[facilityId]) {
                 facilities[facilityId] = {
