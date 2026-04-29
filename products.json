@@ -1,0 +1,411 @@
+[
+    {
+        "id": "wolframOre",
+        "name": "Wolfram Ore",
+        "producedIn": [
+            {
+                "id": "miner_basic",
+                "name": "Miner",
+                "requires": [],
+                "takesTime": 1
+            },
+            {
+                "id": "miner_advanced",
+                "name": "Advanced Miner",
+                "requires": [],
+                "takesTime": 0.1
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "calciumOre",
+        "name": "Calcium Ore",
+        "producedIn": [
+            {
+                "id": "miner_basic",
+                "name": "Miner",
+                "requires": [],
+                "takesTime": 1
+            },
+            {
+                "id": "miner_advanced",
+                "name": "Advanced Miner",
+                "requires": [],
+                "takesTime": 0.1
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "titaniumOre",
+        "name": "Titanium Ore",
+        "producedIn": [
+            {
+                "id": "miner_basic",
+                "requires": [],
+                "takesTime": 1
+            },
+            {
+                "id": "miner_advanced",
+                "requires": [],
+                "takesTime": 0.1
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "basicBuildingMaterial",
+        "name": "Basic Building Material",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "wolframOre",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumOre",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 10
+    },
+    {
+        "id": "calciumBlock",
+        "name": "Calcium Block",
+        "producedIn": [
+            {
+                "id": "smelter",
+                "requires": [
+                    {
+                        "productId": "calciumOre",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "intermediateBuildingMaterial",
+        "name": "Intermediate Building Material",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "basicBuildingMaterial",
+                        "quantity": 40
+                    },
+                    {
+                        "productId": "inductor",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "glass",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "titaniumHousing",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 25
+    },
+    {
+        "id": "titaniumBar",
+        "name": "Titanium Bar",
+        "producedIn": [
+            {
+                "id": "smelter",
+                "requires": [
+                    {
+                        "productId": "titaniumOre",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "wolframBar",
+        "name": "Wolfram Bar",
+        "producedIn": [
+            {
+                "id": "smelter",
+                "requires": [
+                    {
+                        "productId": "wolframOre",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "calciteSheets",
+        "name": "Calcite Sheets",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "calciumBlock",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "calciumPowder",
+        "name": "Calcium Powder",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "calciumBlock",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 3
+    },
+    {
+        "id": "titaniumBeam",
+        "name": "Titanium Beam",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "titaniumBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 3
+    },
+    {
+        "id": "titaniumRod",
+        "name": "Titanium Rod",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "titaniumBar",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "titaniumSheet",
+        "name": "Titanium Sheet",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "titaniumBar",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "wolframPowder",
+        "name": "Wolfram Powder",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 3
+    },
+    {
+        "id": "wolframWire",
+        "name": "Wolfram Wire",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "ceramics",
+        "name": "Ceramics",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "calciteSheets",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "glass",
+        "name": "Glass",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "helium3",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "calciumPowder",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 3
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "helium3",
+        "name": "Helium-3",
+        "producedIn": [
+            {
+                "id": "helium_extractor",
+                "requires": [],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 8
+    },
+    {
+        "id": "rotor",
+        "name": "Rotor",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "wolframWire",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "titaniumHousing",
+        "name": "Titanium Housing",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "titaniumBeam",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumSheet",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "tube",
+        "name": "Tube",
+        "producedIn": [
+            {
+                "id": "furnace",
+                "requires": [
+                    {
+                        "productId": "titaniumRod",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "titaniumSheet",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    },
+    {
+        "id": "wolframPlate",
+        "name": "Wolfram Plate",
+        "producedIn": [
+            {
+                "id": "fabricator",
+                "requires": [
+                    {
+                        "productId": "wolframBar",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 2
+    }
+]

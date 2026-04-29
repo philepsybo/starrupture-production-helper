@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starrupture Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Production Calculator</h1>
+            <p>Calculate your production facility requirements</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <h2>Configure Your Order</h2>
+                <form id="calculatorForm">
+                    <div class="form-group">
+                        <label for="product">Product:</label>
+                        <select id="product" required>
+                            <option value="">-- Select a product --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" min="1" value="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Available Time:</label>
+                        <input type="number" id="time" min="1" value="100" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Calculate</button>
+                </form>
+            </section>
+
+            <section id="results" class="results-section" style="display: none;">
+                <h2>Production Requirements</h2>
+                
+                <div id="resultStatus" class="result-status"></div>
+                
+                <div id="facilitiesNeeded" class="facilities-section"></div>
+                
+                <div class="tree-toggle">
+                    <button id="toggleTree" class="btn-secondary">Show Dependency Tree</button>
+                </div>
+                
+                <div id="dependencyTree" class="tree-section" style="display: none;"></div>
+            </section>
+
+            <section id="error" class="error-section" style="display: none;">
+                <p id="errorMessage"></p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Data source: products.json</p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
