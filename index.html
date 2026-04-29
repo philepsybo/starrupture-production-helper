@@ -18,20 +18,24 @@
                 <h2>Configure Your Order</h2>
                 <form id="calculatorForm">
                     <div class="form-group">
-                        <label for="product">Product:</label>
-                        <select id="product" required>
+                        <label for="productSearch">Product:</label>
+                        <div class="product-search-container">
+                            <input type="text" id="productSearch" placeholder="Search products..." autocomplete="off">
+                            <div id="productDropdown" class="product-dropdown" style="display: none;"></div>
+                        </div>
+                        <select id="product" required style="display: none;">
                             <option value="">-- Select a product --</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" min="1" value="10" required>
+                        <input type="number" id="quantity" min="1" value="100" required>
                     </div>
 
                     <div class="form-group">
                         <label for="time">Available Time:</label>
-                        <input type="number" id="time" min="1" value="100" required>
+                        <input type="number" id="time" min="1" value="60" required>
                     </div>
 
                     <button type="submit" class="btn-primary">Calculate</button>
