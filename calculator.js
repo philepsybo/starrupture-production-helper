@@ -275,6 +275,12 @@ function displayResults(result, productId) {
     facilitiesHTML += '</div>';
     facilitiesDiv.innerHTML = facilitiesHTML;
 
+    // Build product allocation view
+    const allocationHTML = buildProductAllocationView(result);
+    if (allocationHTML) {
+        facilitiesDiv.innerHTML += allocationHTML;
+    }
+
     // Build dependency tree
     buildDependencyTree(result);
 
@@ -283,7 +289,99 @@ function displayResults(result, productId) {
     document.getElementById('toggleTree').style.display = result.dependencies && Object.keys(result.dependencies).length > 0 ? 'block' : 'none';
 }
 
-// Aggregate facilities from the entire dependency tree, multiplying counts properly
+// Build product allocation view (bottom-up perspective)
+function buildProductAllocationView(result) {
+    const allocations = {};
+    
+    // Walk through the tree and collect product flows
+    function collectAllocations(node, parentProduct = null) {
+        // For each dependency of this node
+        Object.entries(node.dependencies || {}).forEach(([depId, dep]) => {
+            const productName = dep.result.productName;
+            const quantity = dep.quantity;
+            const consumer = node.productName;
+            
+            if (!allocations[productName]) {
+                allocations[productName] = {
+                    totalQuantity: 0,
+                    consumers: {},
+                    producers: dep.result.facilities
+                };
+            }
+            
+            allocations[productName].totalQuantity += quantity;
+            
+            if (!allocations[productName].consumers[consumer]) {
+                allocations[productName].consumers[consumer] = 0;
+            }
+            allocations[productName].consumers[consumer] += quantity;
+            
+            // Recursively collect from dependencies
+            collectAllocations(dep.result);
+        });
+    }
+    
+    collectAllocations(result);
+    
+    if (Object.keys(allocations).length === 0) {
+        return '';
+    }
+    
+    let html = '<h3>Product Flow & Distribution</h3>';
+    html += '<p class="allocation-description">How intermediate products flow through the production chain</p>';
+    html += '<div class="allocation-container">';
+    
+    // Sort by total quantity needed (descending)
+    const sortedAllocations = Object.entries(allocations).sort((a, b) => b[1].totalQuantity - a[1].totalQuantity);
+    
+    sortedAllocations.forEach(([productName, alloc]) => {
+        const percent = (amount, total) => ((amount / total) * 100).toFixed(1);
+        
+        html += `<div class="allocation-card">`;
+        html += `<div class="allocation-header">`;
+        html += `<span class="allocation-product">${productName}</span>`;
+        html += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units total</span>`;
+        html += `</div>`;
+        
+        // Show producers
+        html += `<div class="allocation-producers">`;
+        html += `<span class="allocation-label">Produced by:</span>`;
+        const producerText = alloc.producers.map(p => {
+            const name = getFacilityName(p.id);
+            return `<span class="facility-badge">${name} ×${p.facilitiesNeeded}</span>`;
+        }).join('');
+        html += producerText;
+        html += `</div>`;
+        
+        // Show distribution to consumers
+        html += `<div class="allocation-distribution">`;
+        html += `<span class="allocation-label">Distributed to:</span>`;
+        html += `<div class="consumer-breakdown">`;
+        
+        Object.entries(alloc.consumers)
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([consumer, amount]) => {
+                const pct = percent(amount, alloc.totalQuantity);
+                html += `<div class="consumer-item">`;
+                html += `<div class="consumer-info">`;
+                html += `<span class="consumer-name">${consumer}</span>`;
+                html += `<span class="consumer-amount">${amount.toFixed(1)} units (${pct}%)</span>`;
+                html += `</div>`;
+                html += `<div class="consumer-bar">`;
+                html += `<div class="consumer-bar-fill" style="width: ${pct}%"></div>`;
+                html += `</div>`;
+                html += `</div>`;
+            });
+        
+        html += `</div>`;
+        html += `</div>`;
+        html += `</div>`;
+    });
+    
+    html += '</div>';
+    return html;
+}
+
 function aggregateFacilities(result, facilities = {}, parentMultiplier = 1) {
     // Group facilities by what they produce (alternatives for the same product)
     const facilityByProduct = {};
