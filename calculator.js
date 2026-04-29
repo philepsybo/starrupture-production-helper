@@ -146,7 +146,11 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         facility.requires?.forEach(req => {
             // Total quantity needed is the same regardless of which facility option we choose
             // (they all produce the requested quantity)
-            const totalNeeded = req.quantity * quantity; // Based on the PRODUCT, not per facility
+            // Account for amountProduced: if we need 200 powder but each cycle makes 3,
+            // we only need ceil(200/3) amounts of the input, not 200
+            const amountPerCycle = product.amountProduced || 1;
+            const recipesNeeded = Math.ceil(quantity / amountPerCycle);
+            const totalNeeded = req.quantity * recipesNeeded;
             
             if (!dependenciesMap[req.productId]) {
                 dependenciesMap[req.productId] = {
