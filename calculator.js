@@ -123,7 +123,6 @@ function highlightDropdownItem(index) {
 // Setup event listeners
 function setupEventListeners() {
     document.getElementById('calculatorForm').addEventListener('submit', handleCalculate);
-    document.getElementById('toggleTree').addEventListener('click', toggleTree);
     
     // Search input handlers
     const searchInput = document.getElementById('productSearch');
@@ -416,12 +415,8 @@ function displayResults(result, productId) {
         facilitiesDiv.innerHTML += allocationHTML;
     }
 
-    // Build dependency tree
-    buildDependencyTree(result);
-
     // Show results section
     resultsSection.style.display = 'block';
-    document.getElementById('toggleTree').style.display = result.dependencies && Object.keys(result.dependencies).length > 0 ? 'block' : 'none';
 }
 
 // Build product allocations data structure (helper for displayResults)
@@ -810,86 +805,7 @@ function getFacilityName(facilityId) {
 }
 
 // Build and display dependency tree
-function buildDependencyTree(result) {
-    const treeDiv = document.getElementById('dependencyTree');
-    let treeHTML = '<h3>Dependency Chain</h3>';
-    
-    if (!result.dependencies || Object.keys(result.dependencies).length === 0) {
-        treeHTML += '<p>This product has no dependencies.</p>';
-        treeDiv.innerHTML = treeHTML;
-        return;
-    }
 
-    treeHTML += '<div class="tree-container">';
-    treeHTML += buildTreeNode(result, 0);
-    treeHTML += '</div>';
-    
-    treeDiv.innerHTML = treeHTML;
-}
-
-// Recursively build tree nodes
-function buildTreeNode(result, depth) {
-    let html = '';
-    
-    html += `<div class="tree-node" data-depth="${depth}">`;
-    html += `<div class="tree-node-header">`;
-    html += `<span class="tree-product">${result.productName}</span>`;
-    html += `<span class="tree-quantity">(${result.requestedQuantity.toFixed(1)} units)</span>`;
-    html += `</div>`;
-    
-    if (result.dependencies && Object.keys(result.dependencies).length > 0) {
-        html += '<div class="tree-dependencies">';
-        Object.entries(result.dependencies).forEach(([depId, dep]) => {
-            html += `<div class="tree-child">`;
-            html += `<div class="tree-requirement">`;
-            html += `<span class="tree-dep">${dep.result.productName}</span>`;
-            html += `<span class="tree-quantity">(${dep.quantity.toFixed(1)} units needed)</span>`;
-            html += `</div>`;
-            
-            // Show facilities as options if there are multiple alternatives
-            html += `<div class="tree-facilities">`;
-            if (dep.result.facilities.length > 1) {
-                html += `<div class="tree-facility-label">Choose ONE of:</div>`;
-                dep.result.facilities.forEach((fac, idx) => {
-                    const facilityName = getFacilityName(fac.id);
-                    html += `<div class="tree-facility tree-facility-option">
-                        <span class="option-letter">${String.fromCharCode(65 + idx)}</span>
-                        <span class="option-text">${facilityName} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}</span>
-                    </div>`;
-                });
-            } else {
-                dep.result.facilities.forEach(fac => {
-                    const facilityName = getFacilityName(fac.id);
-                    html += `<div class="tree-facility">${facilityName} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}</div>`;
-                });
-            }
-            html += `</div>`;
-            
-            if (dep.result.dependencies && Object.keys(dep.result.dependencies).length > 0) {
-                html += buildTreeNode(dep.result, depth + 1);
-            }
-            html += `</div>`;
-        });
-        html += '</div>';
-    }
-    
-    html += '</div>';
-    return html;
-}
-
-// Toggle tree visibility
-function toggleTree() {
-    const treeDiv = document.getElementById('dependencyTree');
-    const button = document.getElementById('toggleTree');
-    
-    if (treeDiv.style.display === 'none') {
-        treeDiv.style.display = 'block';
-        button.textContent = 'Hide Dependency Tree';
-    } else {
-        treeDiv.style.display = 'none';
-        button.textContent = 'Show Dependency Tree';
-    }
-}
 
 // Show error message
 function showError(message) {
