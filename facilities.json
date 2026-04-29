@@ -60,6 +60,11 @@
         "description": "High-precision construction facility"
     },
     {
+        "id": "refinery",
+        "name": "Refinery",
+        "description": "Advanced oil refining facility"
+    },
+    {
         "id": "pressurizer",
         "name": "Pressurizer",
         "description": "Pressurization facility"

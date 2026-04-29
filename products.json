@@ -1425,4 +1425,154 @@
         ],
         "amountProduced": 2
     },
+    {
+        "id": "organicCompound",
+        "name": "Organic Compound",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "refinedOil",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "epoxy",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 3
+    },
+    {
+        "id": "plastic",
+        "name": "Plastic",
+        "producedIn": [
+            {
+                "id": "compounder",
+                "requires": [
+                    {
+                        "productId": "refinedOil",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "sulphuricAcid",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "chemicals",
+                        "quantity": 1
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 5
+    },
+    {
+        "id": "refinedOil",
+        "name": "Refined Oil",
+        "producedIn": [
+            {
+                "id": "refinery",
+                "requires": [
+                    {
+                        "productId": "crudeOil",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "calciumOre",
+                        "quantity": 12
+                    },
+                    {
+                        "productId": "titaniumOre",
+                        "quantity": 12
+                    }
+                ],
+                "takesTime": 6
+            }
+        ],
+        "amountProduced": 10
+    },
+    {
+        "id": "reinforcedFrame",
+        "name": "Reinforced Frame",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "tube",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "titanoferriteIngot",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "titaniumBeam",
+                        "quantity": 2
+                    }
+                ],
+                "takesTime": 5
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "reinforcedHousing",
+        "name": "Reinforced Housing",
+        "producedIn": [
+            {
+                "id": "mega_press",
+                "requires": [
+                    {
+                        "productId": "titaniumHousing",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframSteelIngot",
+                        "quantity": 4
+                    },
+                    {
+                        "productId": "wolframPlate",
+                        "quantity": 3
+                    }
+                ],
+                "takesTime": 4
+            }
+        ],
+        "amountProduced": 1
+    },
+    {
+        "id": "scanner",
+        "name": "Scanner",
+        "producedIn": [
+            {
+                "id": "assembler",
+                "requires": [
+                    {
+                        "productId": "lens",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "generator",
+                        "quantity": 3
+                    },
+                    {
+                        "productId": "stabilizer",
+                        "quantity": 12
+                    }
+                ],
+                "takesTime": 10
+            }
+        ],
+        "amountProduced": 1
+    },
 ]
