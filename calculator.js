@@ -440,6 +440,9 @@ function displayResults(result, productId) {
 
     // Show results section
     resultsSection.style.display = 'block';
+    
+    // Initialize checkbox listeners
+    initializeCheckboxListeners();
 }
 
 // Build product allocations data structure (helper for displayResults)
@@ -854,9 +857,30 @@ function buildProductAllocationView(result, allocations) {
                 html += `</div>`;
             });
         
+        html += `</div>`;  // close consumer-breakdown
+        html += `</div>`;  // close allocation-distribution
+        
+        // Add progress checkboxes
+        const safeId = productName.replace(/[^a-zA-Z0-9]/g, '_');
+        html += `<div class="card-progress">`;
+        html += `<span class="progress-title">Production Progress:</span>`;
+        html += `<div class="checkbox-group">`;
+        html += `<div class="checkbox-item">`;
+        html += `<input type="checkbox" id="build-${safeId}" class="progress-checkbox">`;
+        html += `<label for="build-${safeId}">Build facilities</label>`;
+        html += `</div>`;
+        html += `<div class="checkbox-item">`;
+        html += `<input type="checkbox" id="storage-${safeId}" class="progress-checkbox">`;
+        html += `<label for="storage-${safeId}">Build storage/intermediate storage</label>`;
+        html += `</div>`;
+        html += `<div class="checkbox-item">`;
+        html += `<input type="checkbox" id="transport-${safeId}" class="progress-checkbox">`;
+        html += `<label for="transport-${safeId}">Set up transportation</label>`;
         html += `</div>`;
         html += `</div>`;
         html += `</div>`;
+        
+        html += `</div>`;  // close allocation-card
     });
     
     html += '</div>';
@@ -867,6 +891,30 @@ function buildProductAllocationView(result, allocations) {
 function getFacilityName(facilityId) {
     const facility = facilitiesData.find(f => f.id === facilityId);
     return facility ? facility.name : facilityId;
+}
+
+// Initialize checkbox listeners for card completion effect
+function initializeCheckboxListeners() {
+    const checkboxes = document.querySelectorAll('.progress-checkbox');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            // Find the parent card
+            const card = checkbox.closest('.allocation-card');
+            if (!card) return;
+            
+            // Check if all checkboxes in this card are checked
+            const cardCheckboxes = card.querySelectorAll('.progress-checkbox');
+            const allChecked = Array.from(cardCheckboxes).every(cb => cb.checked);
+            
+            // Add or remove completed class
+            if (allChecked) {
+                card.classList.add('card-completed');
+            } else {
+                card.classList.remove('card-completed');
+            }
+        });
+    });
 }
 
 // Build and display dependency tree
