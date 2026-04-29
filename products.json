@@ -441,6 +441,28 @@
                     }
                 ],
                 "takesTime": 2
+            },
+            {
+                "id": "furnace_advanced",
+                "requires": [
+                    {
+                        "productId": "calciumPowder",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "wolframPowder",
+                        "quantity": 2
+                    },
+                    {
+                        "productId": "geothiteIngot",
+                        "quantity": 1
+                    },
+                    {
+                        "productId": "helium3",
+                        "quantity": 4
+                    }
+                ],
+                "takesTime": 2
             }
         ],
         "amountProduced": 2

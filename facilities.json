@@ -80,6 +80,11 @@
         "description": "Advanced oil extraction facility"
     },
     {
+        "id": "furnace_advanced",
+        "name": "Advanced Furnace",
+        "description": "High-temperature processing facility"
+    },
+    {
         "id": "pressurizer",
         "name": "Pressurizer",
         "description": "Pressurization facility"
