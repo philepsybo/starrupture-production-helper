@@ -1,5 +1,17 @@
 [
     {
+        "id": "sulphurOre",
+        "name": "Sulphur Ore",
+        "producedIn": [
+            {
+                "id": "sulphur_extractor",
+                "requires": [],
+                "takesTime": 2
+            }
+        ],
+        "amountProduced": 8
+    },
+    {
         "id": "wolframOre",
         "name": "Wolfram Ore",
         "producedIn": [
@@ -951,7 +963,7 @@
         "name": "Synthetic Fertilizer",
         "producedIn": [
             {
-                "id": "undefined",
+                "id": "unknown",
                 "requires": [
                     {
                         "productId": "liquidHelium",
@@ -1201,7 +1213,7 @@
         "name": "Universal Space Soil",
         "producedIn": [
             {
-                "id": "undefined",
+                "id": "unknown",
                 "requires": [
                     {
                         "productId": "syntheticFertilizer",
@@ -1574,5 +1586,5 @@
             }
         ],
         "amountProduced": 1
-    },
+    }
 ]

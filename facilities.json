@@ -1,5 +1,10 @@
 [
     {
+        "id": "unknown",
+        "name": "Unknown Facility",
+        "description": "Needs further research to identify in future"
+    },
+    {
         "id": "miner_basic",
         "name": "Miner",
         "description": "Basic ore extraction facility"
@@ -63,6 +68,16 @@
         "id": "refinery",
         "name": "Refinery",
         "description": "Advanced oil refining facility"
+    },
+    {
+        "id": "sulphur_extractor",
+        "name": "Sulphur Extractor",
+        "description": "Advanced sulphur extraction facility"
+    },
+    {
+        "id": "oil_extractor",
+        "name": "Oil Extractor",
+        "description": "Advanced oil extraction facility"
     },
     {
         "id": "pressurizer",
