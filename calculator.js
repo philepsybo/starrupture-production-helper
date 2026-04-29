@@ -47,7 +47,9 @@ function validateProducts() {
 // Populate the product dropdown
 function populateProductDropdown() {
     const select = document.getElementById('product');
-    productsData.forEach(product => {
+    // Sort products alphabetically by name
+    const sortedProducts = [...productsData].sort((a, b) => a.name.localeCompare(b.name));
+    sortedProducts.forEach(product => {
         const option = document.createElement('option');
         option.value = product.id;
         option.textContent = product.name;
@@ -125,8 +127,8 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
         const facilitiesCount = unitsPerFacility > 0 ? Math.ceil(quantity / unitsPerFacility) : quantity;
         
         const facilityCost = {
-            id: facility.id || facility.name.toLowerCase().replace(/\s+/g, '_'),
-            name: facility.name,
+            id: facility.id,
+            name: getFacilityName(facility.id),
             takesTime: facility.takesTime,
             amountPerCycle: amountPerCycle,
             unitsPerFacility: unitsPerFacility,
@@ -376,34 +378,41 @@ function buildDependencyTree(result) {
 // Recursively build tree nodes
 function buildTreeNode(result, depth) {
     let html = '';
-    const indent = depth * 20;
     
-    html += `<div class="tree-node" style="margin-left: ${indent}px;">`;
-    html += `<span class="tree-product">${result.productName}</span> <span class="tree-quantity">(${result.requestedQuantity.toFixed(1)} units)</span><br>`;
+    html += `<div class="tree-node" data-depth="${depth}">`;
+    html += `<div class="tree-node-header">`;
+    html += `<span class="tree-product">${result.productName}</span>`;
+    html += `<span class="tree-quantity">(${result.requestedQuantity.toFixed(1)} units)</span>`;
+    html += `</div>`;
     
     if (result.dependencies && Object.keys(result.dependencies).length > 0) {
         html += '<div class="tree-dependencies">';
         Object.entries(result.dependencies).forEach(([depId, dep]) => {
             html += `<div class="tree-child">`;
-            html += `<span class="tree-arrow">→</span>`;
-            html += `<span class="tree-dep">${dep.result.productName}</span> <span class="tree-quantity">(${dep.quantity.toFixed(1)} units needed)</span>`;
-            html += `<div class="tree-facilities">`;
+            html += `<div class="tree-requirement">`;
+            html += `<span class="tree-dep">${dep.result.productName}</span>`;
+            html += `<span class="tree-quantity">(${dep.quantity.toFixed(1)} units needed)</span>`;
+            html += `</div>`;
             
             // Show facilities as options if there are multiple alternatives
+            html += `<div class="tree-facilities">`;
             if (dep.result.facilities.length > 1) {
-                html += `<span class="tree-facility-label">Choose ONE of:</span>`;
+                html += `<div class="tree-facility-label">Choose ONE of:</div>`;
                 dep.result.facilities.forEach((fac, idx) => {
-                    html += `<span class="tree-facility tree-facility-option">
-                        Option ${String.fromCharCode(65 + idx)}: ${fac.name} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}
-                    </span>`;
+                    const facilityName = getFacilityName(fac.id);
+                    html += `<div class="tree-facility tree-facility-option">
+                        <span class="option-letter">${String.fromCharCode(65 + idx)}</span>
+                        <span class="option-text">${facilityName} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}</span>
+                    </div>`;
                 });
             } else {
                 dep.result.facilities.forEach(fac => {
-                    html += `<span class="tree-facility">${fac.name} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}</span>`;
+                    const facilityName = getFacilityName(fac.id);
+                    html += `<div class="tree-facility">${facilityName} <span class="facility-id">(${fac.id})</span> ×${fac.facilitiesNeeded}</div>`;
                 });
             }
-            
             html += `</div>`;
+            
             if (dep.result.dependencies && Object.keys(dep.result.dependencies).length > 0) {
                 html += buildTreeNode(dep.result, depth + 1);
             }
