@@ -409,7 +409,7 @@ function displayResults(result, productId) {
                         <strong>${fac.name}</strong> <span class="facility-id">(${fac.id})</span>
                     </div>
                     <div class="facility-summary-count">
-                        <span class="count-number">${fac.totalCount}</span> facilities needed
+                        <span class="count-number">${fac.totalCount}</span>
                     </div>
                     <div class="facility-summary-products">
                         <small>Produces: ${fac.products.join(', ')}</small>
@@ -887,7 +887,7 @@ function buildProductAllocationView(result, allocations) {
         // Add progress checkboxes
         const safeId = productName.replace(/[^a-zA-Z0-9]/g, '_');
         html += `<div class="card-progress">`;
-        html += `<span class="progress-title">Production Progress:</span>`;
+        html += `<span class="progress-title">Progress:</span>`;
         html += `<div class="checkbox-group">`;
         html += `<div class="checkbox-item">`;
         html += `<input type="checkbox" id="build-${safeId}" class="progress-checkbox">`;
