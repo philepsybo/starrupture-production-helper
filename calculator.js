@@ -355,67 +355,39 @@ function displayResults(result, productId) {
     const allocationHTML = buildProductAllocationView(result, allocations);
     
     // Facilities summary
-    let facilitiesHTML = '<h3>Total Facilities Summary</h3>';
     
-    // Add cost summary
-    facilitiesHTML += '<div class="cost-summary">';
-    facilitiesHTML += `<h4>Construction Cost</h4>`;
-    facilitiesHTML += `<div class="cost-breakdown">`;
-    facilitiesHTML += `<div class="cost-item">`;
-    facilitiesHTML += `<span class="cost-label">Basic Building Material:</span>`;
-    facilitiesHTML += `<span class="cost-value">${facilityCost.basicBuildingMaterial}</span>`;
+    let facilitiesHTML = '<h3>Building Materials Required</h3>';
+    facilitiesHTML += '<div class="cost-summary-compact">';
+    facilitiesHTML += `<div class="cost-item-simple">`;
+    facilitiesHTML += `<span class="cost-item-label">Basic Building Material:</span>`;
+    facilitiesHTML += `<span class="cost-item-value">${facilityCost.basicBuildingMaterial}</span>`;
     facilitiesHTML += `</div>`;
-    facilitiesHTML += `<div class="cost-item">`;
-    facilitiesHTML += `<span class="cost-label">Intermediate Building Material:</span>`;
-    facilitiesHTML += `<span class="cost-value">${facilityCost.intermediateBuildingMaterial}</span>`;
+    facilitiesHTML += `<div class="cost-item-simple">`;
+    facilitiesHTML += `<span class="cost-item-label">Intermediate Building Material:</span>`;
+    facilitiesHTML += `<span class="cost-item-value">${facilityCost.intermediateBuildingMaterial}</span>`;
     facilitiesHTML += `</div>`;
-    facilitiesHTML += `<div class="cost-total">`;
-    facilitiesHTML += `<span class="cost-label-total">Total Cost (Materials):</span>`;
-    facilitiesHTML += `<span class="cost-value-total">${facilityCost.total}</span>`;
-    facilitiesHTML += `</div>`;
-    facilitiesHTML += `</div>`;
-    facilitiesHTML += `<p class="cost-warning">⚠️ <strong>Note:</strong> This cost includes facility construction only. Additional materials for transportation and storage infrastructure may be needed depending on your setup and are not included here.</p>`;
-    facilitiesHTML += `</div>`;
+    facilitiesHTML += `<p class="cost-note">⚠️ Additional materials for transportation and storage may be needed.</p>`;
+    facilitiesHTML += '</div>';
     
-    facilitiesHTML += '<div class="facilities-summary">';
+    facilitiesHTML += '<h3>Total Facilities Summary</h3>';
+    facilitiesHTML += '<div class="facilities-list-compact">';
     Object.values(allFacilities).forEach(fac => {
         if (fac.isAlternative) {
-            // Show as alternatives
-            facilitiesHTML += `
-                <div class="facility-summary-card facility-summary-alternatives">
-                    <div class="facility-summary-header">
-                        <strong>${fac.name}</strong>
-                    </div>
-                    <div class="facility-summary-alternatives-list">
-            `;
+            // Show as alternatives in list format
+            facilitiesHTML += `<div class="facility-list-item">`;
+            facilitiesHTML += `<span class="facility-name">${fac.name}:</span>`;
             fac.alternatives.forEach((alt, idx) => {
-                facilitiesHTML += `
-                    <div class="alternative-option">
-                        <span class="alternative-letter">${String.fromCharCode(65 + idx)}</span>
-                        <span class="alternative-name">${alt.name}</span>
-                        <span class="alternative-count">${alt.needed} needed</span>
-                    </div>
-                `;
+                facilitiesHTML += ` <span class="alternative-badge">${String.fromCharCode(65 + idx)}: ${alt.name} (${alt.needed}×)</span>`;
             });
-            facilitiesHTML += `
-                    </div>
-                </div>
-            `;
+            facilitiesHTML += `</div>`;
         } else {
-            // Show as standard facility
-            facilitiesHTML += `
-                <div class="facility-summary-card">
-                    <div class="facility-summary-header">
-                        <strong>${fac.name}</strong> <span class="facility-id">(${fac.id})</span>
-                    </div>
-                    <div class="facility-summary-count">
-                        <span class="count-number">${fac.totalCount}</span>
-                    </div>
-                    <div class="facility-summary-products">
-                        <small>Produces: ${fac.products.join(', ')}</small>
-                    </div>
-                </div>
-            `;
+            // Show as standard facility in list format
+            const producesText = fac.products.join(', ');
+            facilitiesHTML += `<div class="facility-list-item">`;
+            facilitiesHTML += `<span class="facility-name-count">${fac.name}:</span> `;
+            facilitiesHTML += `<span class="facility-count-badge">${fac.totalCount}×</span> `;
+            facilitiesHTML += `<span class="facility-produces">produces: ${producesText}</span>`;
+            facilitiesHTML += `</div>`;
         }
     });
     facilitiesHTML += '</div>';

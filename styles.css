@@ -429,94 +429,105 @@ input:focus, select:focus {
     text-decoration: line-through;
 }
 
-/* Cost Summary */
-.cost-summary {
-    background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
-    border: 2px solid #f39c12;
-    border-radius: 8px;
-    padding: 16px;
+/* Cost Summary - Compact */
+.cost-summary-compact {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
     margin-bottom: 24px;
 }
 
-.cost-summary h4 {
-    color: #e67e22;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-}
-
-.cost-breakdown {
-    background: white;
-    border-radius: 6px;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-left: 4px solid #f39c12;
-}
-
-.cost-item {
+.cost-item-simple {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 0;
+    padding: 6px 0;
+    font-size: 0.95em;
     border-bottom: 1px solid #f0f0f0;
 }
 
-.cost-item:last-child {
+.cost-item-simple:last-of-type {
     border-bottom: none;
 }
 
-.cost-label {
+.cost-item-label {
     font-weight: 600;
-    color: #555;
-    font-size: 0.95em;
-}
-
-.cost-value {
-    background: #f0f7ff;
-    color: #0066cc;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.9em;
-}
-
-.cost-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 2px solid #f39c12;
-    font-size: 1.05em;
-}
-
-.cost-label-total {
-    font-weight: 700;
     color: #333;
 }
 
-.cost-value-total {
+.cost-item-value {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
     color: white;
-    padding: 6px 16px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 1.1em;
-}
-
-.cost-warning {
-    background: #fffaed;
-    border-left: 3px solid #f39c12;
-    padding: 12px;
+    padding: 4px 12px;
     border-radius: 4px;
-    color: #c0392b;
-    font-size: 0.9em;
-    line-height: 1.5;
-    margin: 0;
+    font-weight: 700;
+    font-size: 0.95em;
 }
 
-.cost-warning strong {
+.cost-note {
+    font-size: 0.8em;
+    color: #c0392b;
+    margin: 8px 0 0 0;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* Compact Facilities List */
+.facilities-list-compact {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.facility-list-item {
+    display: grid;
+    grid-template-columns: minmax(180px, auto) auto 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.9em;
+    line-height: 1.4;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.facility-list-item:last-child {
+    border-bottom: none;
+}
+
+.facility-name-count {
+    font-weight: 600;
+    color: #333;
+}
+
+.facility-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.facility-count-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.facility-produces {
+    color: #666;
+    font-size: 0.85em;
+}
+
+.alternative-badge {
+    background: #fff3e0;
     color: #e67e22;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .facilities-summary {
