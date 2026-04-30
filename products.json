@@ -502,7 +502,7 @@
         "name": "Tube",
         "producedIn": [
             {
-                "id": "furnace",
+                "id": "fabricator",
                 "requires": [
                     {
                         "productId": "titaniumRod",
@@ -517,7 +517,7 @@
                 "amountProduced": 2
             },
             {
-                "id": "furnace_advanced",
+                "id": "fabricator_advanced",
                 "requires": [
                     {
                         "productId": "geothiteIngot",
