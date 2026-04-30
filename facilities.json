@@ -2,96 +2,172 @@
     {
         "id": "unknown",
         "name": "Unknown Facility",
-        "description": "Needs further research to identify in future"
+        "description": "Needs further research to identify in future",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "miner_basic",
         "name": "Miner",
-        "description": "Basic ore extraction facility"
+        "description": "Basic ore extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 80,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "miner_advanced",
         "name": "Advanced Miner",
-        "description": "High-speed ore extraction facility"
+        "description": "High-speed ore extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 120
+        }
     },
     {
         "id": "fabricator",
         "name": "Fabricator",
-        "description": "Precision crafting and assembly facility"
+        "description": "Precision crafting and assembly facility",
+        "cost": {
+            "basicBuildingMaterial": 140,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "fabricator_advanced",
         "name": "Advanced Fabricator",
-        "description": "High-precision crafting and assembly facility"
+        "description": "High-precision crafting and assembly facility",
+        "cost": {
+            "basicBuildingMaterial": 350,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "smelter",
         "name": "Smelter",
-        "description": "Ore refining and bar production facility"
+        "description": "Ore refining and bar production facility",
+        "cost": {
+            "basicBuildingMaterial": 100,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "furnace",
         "name": "Furnace",
-        "description": "High-temperature processing facility"
+        "description": "High-temperature processing facility",
+        "cost": {
+            "basicBuildingMaterial": 200,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "mega_press",
         "name": "Mega Press",
-        "description": "Heavy-duty compression and assembly facility"
+        "description": "Heavy-duty compression and assembly facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 80
+        }
     },
     {
         "id": "helium_extractor",
         "name": "Helium Extractor",
-        "description": "Helium-3 extraction facility"
+        "description": "Helium-3 extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 250,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "assembler",
         "name": "Assembler",
-        "description": "Precision assembly facility"
+        "description": "Precision assembly facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 200
+        }
     },
     {
         "id": "compounder",
         "name": "Compounder",
-        "description": "Compound processing facility"
+        "description": "Compound processing facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 180
+        }
     },
     {
         "id": "pyro_forge",
         "name": "Pyro Forge",
-        "description": "High-temperature processing facility"
+        "description": "High-temperature processing facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 130
+        }
     },
     {
         "id": "laser_drill",
         "name": "Laser Drill",
-        "description": "High-precision ore extraction facility"
+        "description": "High-precision ore extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 150
+        }
     },
     {
         "id": "constructorizer_advanced",
         "name": "Advanced Constructorizer",
-        "description": "High-precision construction facility"
+        "description": "High-precision construction facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "refinery",
         "name": "Refinery",
-        "description": "Advanced oil refining facility"
+        "description": "Advanced oil refining facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "sulphur_extractor",
         "name": "Sulphur Extractor",
-        "description": "Advanced sulphur extraction facility"
+        "description": "Advanced sulphur extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 110
+        }
     },
     {
         "id": "oil_extractor",
         "name": "Oil Extractor",
-        "description": "Advanced oil extraction facility"
+        "description": "Advanced oil extraction facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "furnace_advanced",
         "name": "Advanced Furnace",
-        "description": "High-temperature processing facility"
+        "description": "High-temperature processing facility",
+        "cost": {
+            "basicBuildingMaterial": 450,
+            "intermediateBuildingMaterial": 0
+        }
     },
     {
         "id": "pressurizer",
         "name": "Pressurizer",
-        "description": "Pressurization facility"
+        "description": "Pressurization facility",
+        "cost": {
+            "basicBuildingMaterial": 0,
+            "intermediateBuildingMaterial": 90
+        }
     }
 ]
