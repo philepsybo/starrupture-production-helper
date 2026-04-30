@@ -805,19 +805,24 @@ function buildProductAllocationView(result, allocations) {
         html += `<div class="product-info">`;
         html += `<span class="allocation-product">${productName}</span>`;
         
-        // Get input materials for this product - product is already defined above
+        // Get input materials ONLY from the chosen facility
         const inputMaterials = new Set();
         
-        if (product && product.producedIn) {
-            // Collect all input materials from all production options
-            product.producedIn.forEach(facility => {
-                facility.requires?.forEach(req => {
+        if (product && product.producedIn && producingFacilitiesForThisProduct.length > 0) {
+            // Get the ID of the chosen facility
+            const chosenFacilityId = producingFacilitiesForThisProduct[0].id;
+            
+            // Find that facility and get only its requirements
+            const chosenFacility = product.producedIn.find(f => f.id === chosenFacilityId);
+            
+            if (chosenFacility && chosenFacility.requires) {
+                chosenFacility.requires.forEach(req => {
                     const inputProductName = productsData.find(p => p.id === req.productId)?.name;
                     if (inputProductName) {
                         inputMaterials.add(inputProductName);
                     }
                 });
-            });
+            }
         }
         
         // Display input materials if any
