@@ -429,6 +429,95 @@ input:focus, select:focus {
     text-decoration: line-through;
 }
 
+/* Cost Summary */
+.cost-summary {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+    border: 2px solid #f39c12;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.cost-summary h4 {
+    color: #e67e22;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.cost-breakdown {
+    background: white;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #f39c12;
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+}
+
+.cost-label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.cost-value {
+    background: #f0f7ff;
+    color: #0066cc;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.cost-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 2px solid #f39c12;
+    font-size: 1.05em;
+}
+
+.cost-label-total {
+    font-weight: 700;
+    color: #333;
+}
+
+.cost-value-total {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.cost-warning {
+    background: #fffaed;
+    border-left: 3px solid #f39c12;
+    padding: 12px;
+    border-radius: 4px;
+    color: #c0392b;
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.cost-warning strong {
+    color: #e67e22;
+}
 
 .facilities-summary {
     display: grid;

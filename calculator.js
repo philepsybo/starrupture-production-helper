@@ -348,11 +348,35 @@ function displayResults(result, productId) {
     const allocations = buildProductAllocations(result);
     const allFacilities = calculateFacilitiesFromAllocations(allocations, result.timeAvailable, result);
     
+    // Calculate total facility construction cost
+    const facilityCost = calculateFacilityCost(allFacilities);
+    
     // Derive facilities summary from properly aggregated allocations
     const allocationHTML = buildProductAllocationView(result, allocations);
     
     // Facilities summary
     let facilitiesHTML = '<h3>Total Facilities Summary</h3>';
+    
+    // Add cost summary
+    facilitiesHTML += '<div class="cost-summary">';
+    facilitiesHTML += `<h4>Construction Cost</h4>`;
+    facilitiesHTML += `<div class="cost-breakdown">`;
+    facilitiesHTML += `<div class="cost-item">`;
+    facilitiesHTML += `<span class="cost-label">Basic Building Material:</span>`;
+    facilitiesHTML += `<span class="cost-value">${facilityCost.basicBuildingMaterial}</span>`;
+    facilitiesHTML += `</div>`;
+    facilitiesHTML += `<div class="cost-item">`;
+    facilitiesHTML += `<span class="cost-label">Intermediate Building Material:</span>`;
+    facilitiesHTML += `<span class="cost-value">${facilityCost.intermediateBuildingMaterial}</span>`;
+    facilitiesHTML += `</div>`;
+    facilitiesHTML += `<div class="cost-total">`;
+    facilitiesHTML += `<span class="cost-label-total">Total Cost (Materials):</span>`;
+    facilitiesHTML += `<span class="cost-value-total">${facilityCost.total}</span>`;
+    facilitiesHTML += `</div>`;
+    facilitiesHTML += `</div>`;
+    facilitiesHTML += `<p class="cost-warning">⚠️ <strong>Note:</strong> This cost includes facility construction only. Additional materials for transportation and storage infrastructure may be needed depending on your setup and are not included here.</p>`;
+    facilitiesHTML += `</div>`;
+    
     facilitiesHTML += '<div class="facilities-summary">';
     Object.values(allFacilities).forEach(fac => {
         if (fac.isAlternative) {
@@ -885,6 +909,33 @@ function buildProductAllocationView(result, allocations) {
     
     html += '</div>';
     return html;
+}
+
+// Calculate total cost for facility construction
+function calculateFacilityCost(allFacilities) {
+    let basicBuildingMaterial = 0;
+    let intermediateBuildingMaterial = 0;
+    
+    Object.values(allFacilities).forEach(fac => {
+        if (fac.isAlternative) {
+            // For alternatives, we only pick one (the best/first one shown)
+            // but since alternatives aren't really "built", this shouldn't happen in the final result
+            return;
+        }
+        
+        const facilityData = facilitiesData.find(f => f.id === fac.id);
+        if (facilityData && facilityData.cost) {
+            const unitsNeeded = fac.totalCount;
+            basicBuildingMaterial += (facilityData.cost.basicBuildingMaterial || 0) * unitsNeeded;
+            intermediateBuildingMaterial += (facilityData.cost.intermediateBuildingMaterial || 0) * unitsNeeded;
+        }
+    });
+    
+    return {
+        basicBuildingMaterial: basicBuildingMaterial,
+        intermediateBuildingMaterial: intermediateBuildingMaterial,
+        total: basicBuildingMaterial + intermediateBuildingMaterial
+    };
 }
 
 // Helper function to get facility name from ID
