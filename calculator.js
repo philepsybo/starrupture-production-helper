@@ -802,7 +802,31 @@ function buildProductAllocationView(result, allocations) {
         
         html += `<div class="allocation-card">`;
         html += `<div class="allocation-header">`;
+        html += `<div class="product-info">`;
         html += `<span class="allocation-product">${productName}</span>`;
+        
+        // Get input materials for this product - product is already defined above
+        const inputMaterials = new Set();
+        
+        if (product && product.producedIn) {
+            // Collect all input materials from all production options
+            product.producedIn.forEach(facility => {
+                facility.requires?.forEach(req => {
+                    const inputProductName = productsData.find(p => p.id === req.productId)?.name;
+                    if (inputProductName) {
+                        inputMaterials.add(inputProductName);
+                    }
+                });
+            });
+        }
+        
+        // Display input materials if any
+        if (inputMaterials.size > 0) {
+            const inputList = Array.from(inputMaterials).sort().join(', ');
+            html += `<div class="input-materials">Requires: ${inputList}</div>`;
+        }
+        
+        html += `</div>`;
         html += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units total</span>`;
         html += `</div>`;
         
