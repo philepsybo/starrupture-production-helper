@@ -493,8 +493,6 @@ function buildProductAllocations(result) {
                     .find(f => f.id === consumerFacilityId);
                 
                 if (consumerFacility && !allocations[productName].consumers[consumer].facilities.find(f => f.id === consumerFacilityId)) {
-                    console.log(`Adding facility for ${productName}→${consumer}: ${consumerFacilityId}`);
-                    
                     // Calculate how many facilities needed
                     const consumerAmount = allocations[productName].consumers[consumer].amount;
                     const cycles = result.timeAvailable / consumerFacility.takesTime;
