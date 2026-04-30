@@ -470,8 +470,10 @@ function buildProductAllocations(result) {
             }
             allocations[productName].consumers[consumer].amount += quantity;
             
-            // Find which facilities consume this product - record them for later count calculation
-            node.facilities.forEach(facility => {
+            // Find which facilities consume this product - only consider the chosen facility to avoid showing alternatives
+            // Only iterate over the facility that was actually selected by the greedy heuristic
+            const facilitiesToConsider = node.chosenFacility ? [node.chosenFacility] : node.facilities;
+            facilitiesToConsider.forEach(facility => {
                 facility.requirements?.forEach(req => {
                     if (req.productId === depId) {
                         // Record facility relationship for later calculation when all amounts are known
