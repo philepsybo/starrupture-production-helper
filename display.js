@@ -87,11 +87,34 @@ export function displayResults(result, productId) {
         });
     sortedAllocations.forEach(([productName, alloc]) => {
         allocationsHTML += `<div class="allocation-card">`;
-        allocationsHTML += `<div class="allocation-header"><span class="allocation-product">${productName}</span> <span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units</span></div>`;
+        allocationsHTML += `<div class="allocation-header">`;
+        allocationsHTML += `<div class="product-info">`;
+        allocationsHTML += `<span class="allocation-product">${productName}</span>`;
+        // Show input materials below the product name
+        const product = productsData.find(p => p.name === productName);
+        let inputMaterials = new Set();
+        if (product && product.producedIn && product.producedIn.length > 0) {
+            // Use the best/first facility for this product
+            const chosenFacility = product.producedIn[0];
+            if (chosenFacility && chosenFacility.requires) {
+                chosenFacility.requires.forEach(req => {
+                    const inputProductName = productsData.find(p => p.id === req.productId)?.name;
+                    if (inputProductName) inputMaterials.add(inputProductName);
+                });
+            }
+        }
+        if (inputMaterials.size > 0) {
+            const inputList = Array.from(inputMaterials).sort()
+                .map(mat => `<a class="material-link" onclick="scrollToCard('${mat.replace(/'/g, "\\'")}'); return false;" href="#${mat.replace(/[^a-zA-Z0-9]/g, '_')}">${mat}</a>`)
+                .join(', ');
+            allocationsHTML += `<div class="input-materials">Requires: ${inputList}</div>`;
+        }
+        allocationsHTML += `</div>`; // close product-info
+        allocationsHTML += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units</span>`;
+        allocationsHTML += `</div>`; // close allocation-header
         // Show producers with per-product counts
         allocationsHTML += `<div class="allocation-producers"><span class="allocation-label">Produced by:</span> `;
         // Find the best (fewest) facility count for this product
-        const product = productsData.find(p => p.name === productName);
         let producingFacilities = [];
         if (product && product.producedIn) {
             if (product.producedIn.length > 1) {
@@ -127,10 +150,14 @@ export function displayResults(result, productId) {
         // Show distribution to consumers
         allocationsHTML += `<div class="allocation-distribution"><span class="allocation-label">Distributed to:</span><div class="consumer-breakdown">`;
         Object.entries(alloc.consumers).forEach(([consumer, consumerData]) => {
-            allocationsHTML += `<div class="consumer-item"><span class="consumer-name">${consumer}</span> <span class="consumer-amount">${consumerData.amount.toFixed(1)} units</span>`;
+            allocationsHTML += `<div class="consumer-item">`;
+            allocationsHTML += `<div class="consumer-info">`;
+            allocationsHTML += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;\" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}\">${consumer}</a>`;
+            allocationsHTML += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units</span>`;
             if (consumerData.facilities.length > 0) {
                 allocationsHTML += consumerData.facilities.map(fac => `<span class="consumer-facility-badge">${fac.name} (×${fac.count})</span>`).join('');
             }
+            allocationsHTML += `</div>`;
             allocationsHTML += `</div>`;
         });
         allocationsHTML += `</div></div></div>`;
