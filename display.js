@@ -68,10 +68,7 @@ export function displayResults(result, productId) {
             }
         }
         producedByMap[productName] = producingFacilities;
-    });
-
-    console.log(producedByMap);
-    
+    });    
 
     // Facilities summary as a compact list
     let facilitiesHTML = '<h3>Facilities Needed</h3>';
