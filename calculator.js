@@ -677,20 +677,36 @@ function displayResults(result, productId) {
 function buildProductAllocations(result) {
     const allocations = {};
     const productToFacility = {}; // Map of productName → chosen facilityId
+    const productToRequestedQuantity = {}; // Map of productName → requestedQuantity
+    const productFacilityMap = {}; // Map of productName → { facilityId, count } from result tree
     
-    // First pass: map which facility produces each product  
-    function mapChosenFacilities(node) {
+    // First pass: extract facility info from result tree for all products
+    function extractProductFacilities(node) {
+        if (node && node.productName && node.facilities && node.facilities.length > 0) {
+            // Pick the chosen/best facility for this product
+            const chosenFacility = node.facilities.find(f => f.id === node.chosenFacility?.id) || node.facilities[0];
+            productFacilityMap[node.productName] = {
+                facilityId: chosenFacility.id,
+                count: chosenFacility.facilitiesNeeded
+            };
+            console.log(`Extracted from result tree: ${node.productName} -> ${chosenFacility.id} ×${chosenFacility.facilitiesNeeded}`);
+        }
         if (node && node.productName && node.chosenFacility) {
             productToFacility[node.productName] = node.chosenFacility.id;
         }
+        if (node && node.productName && node.requestedQuantity) {
+            productToRequestedQuantity[node.productName] = node.requestedQuantity;
+        }
         if (node && node.dependencies) {
             Object.values(node.dependencies).forEach(dep => {
-                if (dep.result) mapChosenFacilities(dep.result);
+                if (dep.result) extractProductFacilities(dep.result);
             });
         }
     }
     
-    mapChosenFacilities(result);
+    extractProductFacilities(result);
+    
+    console.log('productFacilityMap:', productFacilityMap);
     
     // Second pass: build allocations with proper consumer-to-facility mapping
     function collectAllocations(node) {
@@ -723,65 +739,20 @@ function buildProductAllocations(result) {
     
     collectAllocations(result);
     
-    // Second pass: Pre-calculate facility counts per consumer (not per product)
-    // This ensures all ingredients going to the same consumer show the same facility count
-    const facilityCountPerConsumer = {}; // "ConsumerName|FacilityId" -> count
-    
+    // Third pass: Add facilities to each product/consumer using data from result tree
     Object.entries(allocations).forEach(([productName, alloc]) => {
         Object.entries(alloc.consumers).forEach(([consumer, consumerData]) => {
-            const consumerFacilityId = productToFacility[consumer];
-            const cacheKey = `${consumer}|${consumerFacilityId}`;
-            
-            // Only calculate once per consumer/facility combo
-            if (consumerFacilityId && !facilityCountPerConsumer[cacheKey]) {
-                const consumerFacility = productsData.flatMap(p => p.producedIn || [])
-                    .find(f => f.id === consumerFacilityId);
-                
-                if (consumerFacility) {
-                    const cycles = result.timeAvailable / consumerFacility.takesTime;
-                    const amountPerCycle = consumerFacility.amountProduced || 1;
-                    const productionPerFacility = cycles * amountPerCycle;
-                    
-                    // Get total amount of consumer being produced
-                    // For intermediate products, sum what all ingredients deliver to this consumer
-                    let consumerTotal = 0;
-                    
-                    if (consumer === result.productName) {
-                        // Target product
-                        consumerTotal = result.requestedQuantity;
-                    } else {
-                        // Intermediate product - sum amounts from all ingredients going to it
-                        Object.entries(allocations).forEach(([ingredientName, ingredientAlloc]) => {
-                            if (ingredientAlloc.consumers[consumer]) {
-                                consumerTotal += ingredientAlloc.consumers[consumer].amount;
-                            }
-                        });
-                    }
-                    
-                    const facilitiesNeeded = productionPerFacility > 0
-                        ? Math.ceil(consumerTotal / productionPerFacility)
-                        : 0;
-                    
-                    facilityCountPerConsumer[cacheKey] = facilitiesNeeded;
+            // First try to get facility directly from the result tree map
+            if (productFacilityMap[consumer]) {
+                const facilityInfo = productFacilityMap[consumer];
+                if (!consumerData.facilities.find(f => f.id === facilityInfo.facilityId)) {
+                    consumerData.facilities.push({
+                        id: facilityInfo.facilityId,
+                        name: getFacilityName(facilityInfo.facilityId),
+                        count: facilityInfo.count
+                    });
+                    console.log(`Added to ${productName} -> ${consumer}: ${getFacilityName(facilityInfo.facilityId)} ×${facilityInfo.count} (from result tree)`);
                 }
-            }
-        });
-    });
-    
-    // Third pass: Add facilities to each product/consumer using cached counts
-    Object.entries(allocations).forEach(([productName, alloc]) => {
-        Object.entries(alloc.consumers).forEach(([consumer, consumerData]) => {
-            const consumerFacilityId = productToFacility[consumer];
-            const cacheKey = `${consumer}|${consumerFacilityId}`;
-            
-            if (consumerFacilityId && !consumerData.facilities.find(f => f.id === consumerFacilityId)) {
-                const facilitiesNeeded = facilityCountPerConsumer[cacheKey] || 0;
-                
-                consumerData.facilities.push({
-                    id: consumerFacilityId,
-                    name: getFacilityName(consumerFacilityId),
-                    count: facilitiesNeeded
-                });
             }
         });
     });
@@ -1122,6 +1093,9 @@ function buildProductAllocationView(result, allocations) {
         html += `<span class="allocation-label">Distributed to:</span>`;
         html += `<div class="consumer-breakdown">`;
         
+        // Only show facilities once per unique consumer in this product card
+        const shownConsumers = new Set();
+        
         Object.entries(alloc.consumers)
             .sort((a, b) => b[1].amount - a[1].amount)
             .forEach(([consumer, consumerData]) => {
@@ -1131,13 +1105,14 @@ function buildProductAllocationView(result, allocations) {
                 html += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}">${consumer}</a>`;
                 html += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units (${pct}%)</span>`;
                 
-                // Show which facilities consume this product
-                if (consumerData.facilities.length > 0) {
+                // Show facilities only once per consumer (on first mention in this card)
+                if (consumerData.facilities.length > 0 && !shownConsumers.has(consumer)) {
                     html += `<div class="consumer-facilities">`;
                     consumerData.facilities.forEach(fac => {
                         html += `<span class="consumer-facility-badge">${fac.name} (×${fac.count})</span>`;
                     });
                     html += `</div>`;
+                    shownConsumers.add(consumer);
                 }
                 html += `</div>`;
                 html += `<div class="consumer-bar">`;
