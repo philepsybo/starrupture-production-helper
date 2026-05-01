@@ -82,22 +82,24 @@ function filterProductDropdown() {
     const dropdown = document.getElementById('productDropdown');
     const searchTerm = searchInput.value.toLowerCase().trim();
     
+    // Determine which products to show
+    let productsToShow;
     if (searchTerm === '') {
-        dropdown.style.display = 'none';
-        return;
+        // Show all products alphabetically sorted when search is empty
+        productsToShow = window.sortedProducts;
+    } else {
+        // Filter products based on search term
+        productsToShow = window.sortedProducts.filter(product =>
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.id.toLowerCase().includes(searchTerm)
+        );
     }
     
-    // Filter products based on search term
-    const filtered = window.sortedProducts.filter(product =>
-        product.name.toLowerCase().includes(searchTerm) ||
-        product.id.toLowerCase().includes(searchTerm)
-    );
-    
     // Build dropdown HTML
-    if (filtered.length === 0) {
+    if (productsToShow.length === 0) {
         dropdown.innerHTML = '<div class="dropdown-item no-results">No products found</div>';
     } else {
-        dropdown.innerHTML = filtered.map(product =>
+        dropdown.innerHTML = productsToShow.map(product =>
             `<div class="dropdown-item" data-product-id="${product.id}" data-product-name="${product.name}">
                 ${product.name}
             </div>`
@@ -105,7 +107,7 @@ function filterProductDropdown() {
     }
     
     dropdown.style.display = 'block';
-    window.currentFilteredProducts = filtered;
+    window.currentFilteredProducts = productsToShow;
     window.highlightedIndex = -1;
 }
 
@@ -195,9 +197,7 @@ function setupEventListeners() {
     
     // Open dropdown on focus
     searchInput.addEventListener('focus', () => {
-        if (searchInput.value.trim() !== '') {
-            filterProductDropdown();
-        }
+        filterProductDropdown();
     });
     
     // Handle dropdown item clicks
