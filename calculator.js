@@ -339,7 +339,7 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
     };
 }
 
-// Generate and display material flow graph using Mermaid
+// Generate material flow graph data and provide link to open in new tab
 function displayMaterialFlowGraph(result, container) {
     let nodeCounter = 0;
     const nodeMap = new Map(); // Map product names to node IDs for deduplication
@@ -383,112 +383,17 @@ function displayMaterialFlowGraph(result, container) {
     // Render the mermaid diagram
     mermaidCode += '    classDef product fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff\n';
     
-    // Create a unique ID for this diagram
-    const diagramId = `mermaid-${Date.now()}`;
-    
-    // Build HTML with controls
+    // Display simple button to open graph
     container.innerHTML = `
-        <div class="graph-controls">
-            <button class="graph-btn" id="zoomIn" title="Zoom In">🔍+</button>
-            <button class="graph-btn" id="zoomOut" title="Zoom Out">🔍−</button>
-            <button class="graph-btn" id="resetZoom" title="Reset View">⟲</button>
-            <button class="graph-btn" id="openFullscreen" title="Open in New Tab">⬈</button>
-        </div>
-        <div class="graph-container" id="graphContainer">
-            <div class="mermaid" id="${diagramId}">${mermaidCode}</div>
+        <div class="graph-link-section">
+            <button class="graph-open-btn" id="openGraphButton" title="Open Material Flow Diagram in New Tab">
+                📊 View Material Flow Diagram
+            </button>
         </div>
     `;
     
-    // Trigger mermaid rendering
-    mermaid.contentLoaded();
-    
-    // Wait for Mermaid to render, then set up interactivity
-    setTimeout(() => {
-        setupGraphInteractivity(diagramId, mermaidCode);
-    }, 500);
-}
-
-// Setup zoom, pan, and fullscreen functionality for the graph
-function setupGraphInteractivity(diagramId, mermaidCode) {
-    const container = document.getElementById('graphContainer');
-    const svg = container.querySelector('svg');
-    
-    if (!svg) return; // SVG not rendered yet
-    
-    // Create a group to hold all SVG content for easier transform management
-    let g = svg.querySelector('g[data-transformable]');
-    if (!g) {
-        g = svg.querySelector('g');
-        if (g) {
-            g.setAttribute('data-transformable', 'true');
-        }
-    }
-    
-    if (!g) return;
-    
-    // State for zoom/pan
-    let zoom = 1;
-    let panX = 0;
-    let panY = 0;
-    let isPanning = false;
-    let startX = 0;
-    let startY = 0;
-    
-    const updateTransform = () => {
-        g.setAttribute('transform', `translate(${panX}, ${panY}) scale(${zoom})`);
-    };
-    
-    // Zoom controls
-    document.getElementById('zoomIn')?.addEventListener('click', () => {
-        zoom = Math.min(zoom + 0.2, 3);
-        updateTransform();
-    });
-    
-    document.getElementById('zoomOut')?.addEventListener('click', () => {
-        zoom = Math.max(zoom - 0.2, 0.5);
-        updateTransform();
-    });
-    
-    document.getElementById('resetZoom')?.addEventListener('click', () => {
-        zoom = 1;
-        panX = 0;
-        panY = 0;
-        updateTransform();
-    });
-    
-    // Mouse wheel zoom
-    container.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const zoomDelta = e.deltaY > 0 ? -0.1 : 0.1;
-        zoom = Math.min(Math.max(zoom + zoomDelta, 0.5), 3);
-        updateTransform();
-    }, { passive: false });
-    
-    // Click and drag to pan
-    svg.addEventListener('mousedown', (e) => {
-        isPanning = true;
-        startX = e.clientX - panX;
-        startY = e.clientY - panY;
-        svg.style.cursor = 'grabbing';
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (isPanning) {
-            panX = e.clientX - startX;
-            panY = e.clientY - startY;
-            updateTransform();
-        }
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isPanning = false;
-        svg.style.cursor = 'grab';
-    });
-    
-    svg.style.cursor = 'grab';
-    
-    // Open in fullscreen/new tab
-    document.getElementById('openFullscreen')?.addEventListener('click', () => {
+    // Set up click handler
+    document.getElementById('openGraphButton')?.addEventListener('click', () => {
         openGraphFullscreen(mermaidCode);
     });
 }
