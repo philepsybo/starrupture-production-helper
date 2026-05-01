@@ -196,17 +196,80 @@ export function displayResults(result, productId) {
             let consumerFacilityBadges = '';
             if (producedByMap[consumer] && producedByMap[consumer].length > 0) {
                 producedByMap[consumer].forEach(facility => {
-                    consumerFacilityBadges += `<span class=\"consumer-facility-badge\">${facility.name} (×${facility.count})</span>`;
+                    consumerFacilityBadges += `<span class="consumer-facility-badge">${facility.name} (×${facility.count})</span>`;
                 });
             }
             allocationsHTML += consumerFacilityBadges;
             allocationsHTML += `</div>`;
             allocationsHTML += `</div>`;
         });
-        allocationsHTML += `</div></div></div>`;
+        allocationsHTML += `</div></div>`;
+        // Initialize checklistState for each card
+        let checklistState = {fac: false, sto: false, inb: false, out: false};
+        try {
+            const saved = localStorage.getItem(`starrupture_card_checkboxes_${productName}`);
+            if (saved) checklistState = JSON.parse(saved);
+        } catch {}
+        allocationsHTML += `<ul class="card-progress" data-product="${productName}">
+            <span class="progress-title">Progress Checklist</span>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" class="card-checkbox" data-type="fac" id="fac-${productName}" ${checklistState && checklistState.fac ? 'checked' : ''}/>
+                    <label for="fac-${productName}">build facilities</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" class="card-checkbox" data-type="sto" id="sto-${productName}" ${checklistState && checklistState.sto ? 'checked' : ''}/>
+                    <label for="sto-${productName}">build storage</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" class="card-checkbox" data-type="inb" id="inb-${productName}" ${checklistState && checklistState.inb ? 'checked' : ''}/>
+                    <label for="inb-${productName}">build inbound transportation</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" class="card-checkbox" data-type="out" id="out-${productName}" ${checklistState && checklistState.out ? 'checked' : ''}/>
+                    <label for="out-${productName}">build outbound transportation</label>
+                </div>
+            </div>
+        </ul>`;
+        allocationsHTML += `</div>`;
     });
+
     allocationsHTML += '</div>';
     if (allocationsDiv) allocationsDiv.innerHTML = allocationsHTML;
+
+    // Checklist logic: fade card when all checkboxes are checked
+    document.querySelectorAll('.allocation-card').forEach(card => {
+        const checkboxes = card.querySelectorAll('.card-checkbox');
+        function updateCardVisual() {
+            if (checkboxes.length === 0) return;
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            if (allChecked) {
+                card.classList.add('allocation-card-complete');
+            } else {
+                card.classList.remove('allocation-card-complete');
+            }
+        }
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                updateCardVisual();
+            });
+        });
+        updateCardVisual();
+    });
+
+    // Add CSS for completed effect if not present
+    if (!document.getElementById('allocation-checklist-style')) {
+        const style = document.createElement('style');
+        style.id = 'allocation-checklist-style';
+        style.textContent = `
+        .allocation-card-complete {
+            opacity: 0.45 !important;
+            filter: grayscale(0.85) !important;
+            transition: opacity 0.2s, filter 0.2s;
+        }
+        `;
+        document.head.appendChild(style);
+    }
 
     // Facility cost summary (modern compact style)
     if (costDiv) {
