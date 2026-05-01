@@ -339,6 +339,311 @@ function calculateRequirements(productId, quantity, timeAvailable, visited = new
     };
 }
 
+// Generate and display material flow graph using Mermaid
+function displayMaterialFlowGraph(result, container) {
+    let nodeCounter = 0;
+    const nodeMap = new Map(); // Map product names to node IDs for deduplication
+    const edgesAdded = new Set(); // Track edges to avoid duplicates
+    let mermaidCode = 'graph TD\n';
+    
+    const nodeId = (name, quantity) => {
+        const key = `${name}_${quantity}`;
+        if (!nodeMap.has(key)) {
+            nodeMap.set(key, `N${nodeCounter++}`);
+        }
+        return nodeMap.get(key);
+    };
+    
+    // Recursively build the mermaid graph
+    function traverseResult(node) {
+        const nId = nodeId(node.productName, node.requestedQuantity);
+        mermaidCode += `    ${nId}["${node.productName}<br/>${node.requestedQuantity} units"]\n`;
+        
+        if (node.dependencies && Object.keys(node.dependencies).length > 0) {
+            Object.entries(node.dependencies).forEach(([depId, dep]) => {
+                if (dep.result) {
+                    const depNodeId = nodeId(dep.result.productName, dep.quantity);
+                    mermaidCode += `    ${depNodeId}["${dep.result.productName}<br/>${dep.quantity} units"]\n`;
+                    
+                    // Create unique edge key to avoid duplicates
+                    const edgeKey = `${nId}-->${depNodeId}`;
+                    if (!edgesAdded.has(edgeKey)) {
+                        mermaidCode += `    ${nId} -->|uses| ${depNodeId}\n`;
+                        edgesAdded.add(edgeKey);
+                    }
+                    
+                    traverseResult(dep.result);
+                }
+            });
+        }
+    }
+    
+    traverseResult(result);
+    
+    // Render the mermaid diagram
+    mermaidCode += '    classDef product fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff\n';
+    
+    // Create a unique ID for this diagram
+    const diagramId = `mermaid-${Date.now()}`;
+    
+    // Build HTML with controls
+    container.innerHTML = `
+        <div class="graph-controls">
+            <button class="graph-btn" id="zoomIn" title="Zoom In">🔍+</button>
+            <button class="graph-btn" id="zoomOut" title="Zoom Out">🔍−</button>
+            <button class="graph-btn" id="resetZoom" title="Reset View">⟲</button>
+            <button class="graph-btn" id="openFullscreen" title="Open in New Tab">⬈</button>
+        </div>
+        <div class="graph-container" id="graphContainer">
+            <div class="mermaid" id="${diagramId}">${mermaidCode}</div>
+        </div>
+    `;
+    
+    // Trigger mermaid rendering
+    mermaid.contentLoaded();
+    
+    // Wait for Mermaid to render, then set up interactivity
+    setTimeout(() => {
+        setupGraphInteractivity(diagramId, mermaidCode);
+    }, 500);
+}
+
+// Setup zoom, pan, and fullscreen functionality for the graph
+function setupGraphInteractivity(diagramId, mermaidCode) {
+    const container = document.getElementById('graphContainer');
+    const svg = container.querySelector('svg');
+    
+    if (!svg) return; // SVG not rendered yet
+    
+    // Create a group to hold all SVG content for easier transform management
+    let g = svg.querySelector('g[data-transformable]');
+    if (!g) {
+        g = svg.querySelector('g');
+        if (g) {
+            g.setAttribute('data-transformable', 'true');
+        }
+    }
+    
+    if (!g) return;
+    
+    // State for zoom/pan
+    let zoom = 1;
+    let panX = 0;
+    let panY = 0;
+    let isPanning = false;
+    let startX = 0;
+    let startY = 0;
+    
+    const updateTransform = () => {
+        g.setAttribute('transform', `translate(${panX}, ${panY}) scale(${zoom})`);
+    };
+    
+    // Zoom controls
+    document.getElementById('zoomIn')?.addEventListener('click', () => {
+        zoom = Math.min(zoom + 0.2, 3);
+        updateTransform();
+    });
+    
+    document.getElementById('zoomOut')?.addEventListener('click', () => {
+        zoom = Math.max(zoom - 0.2, 0.5);
+        updateTransform();
+    });
+    
+    document.getElementById('resetZoom')?.addEventListener('click', () => {
+        zoom = 1;
+        panX = 0;
+        panY = 0;
+        updateTransform();
+    });
+    
+    // Mouse wheel zoom
+    container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomDelta = e.deltaY > 0 ? -0.1 : 0.1;
+        zoom = Math.min(Math.max(zoom + zoomDelta, 0.5), 3);
+        updateTransform();
+    }, { passive: false });
+    
+    // Click and drag to pan
+    svg.addEventListener('mousedown', (e) => {
+        isPanning = true;
+        startX = e.clientX - panX;
+        startY = e.clientY - panY;
+        svg.style.cursor = 'grabbing';
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (isPanning) {
+            panX = e.clientX - startX;
+            panY = e.clientY - startY;
+            updateTransform();
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isPanning = false;
+        svg.style.cursor = 'grab';
+    });
+    
+    svg.style.cursor = 'grab';
+    
+    // Open in fullscreen/new tab
+    document.getElementById('openFullscreen')?.addEventListener('click', () => {
+        openGraphFullscreen(mermaidCode);
+    });
+}
+
+// Open graph in a maximized view
+function openGraphFullscreen(mermaidCode) {
+    const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Flow Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.14.0/dist/mermaid.min.js"><\/script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f9f9f9;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .fullscreen-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .fullscreen-controls {
+            background: white;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .fullscreen-btn {
+            padding: 8px 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        .fullscreen-btn:hover {
+            background: #764ba2;
+        }
+        .graph-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .graph-wrapper svg {
+            width: 100%;
+            height: 100%;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="fullscreen-container">
+        <div class="fullscreen-controls">
+            <button class="fullscreen-btn" onclick="zoomIn()">🔍+ Zoom In</button>
+            <button class="fullscreen-btn" onclick="zoomOut()">🔍− Zoom Out</button>
+            <button class="fullscreen-btn" onclick="resetZoom()">⟲ Reset</button>
+            <button class="fullscreen-btn" onclick="window.close()">✕ Close</button>
+        </div>
+        <div class="graph-wrapper">
+            <div class="mermaid">${mermaidCode}</div>
+        </div>
+    </div>
+    <script>
+        let zoom = 1;
+        let panX = 0;
+        let panY = 0;
+        let isPanning = false;
+        let startX = 0;
+        let startY = 0;
+        
+        mermaid.contentLoaded();
+        
+        setTimeout(() => {
+            const svg = document.querySelector('svg');
+            const g = svg?.querySelector('g');
+            if (g) {
+                g.setAttribute('data-transformable', 'true');
+                
+                const updateTransform = () => {
+                    g.setAttribute('transform', \`translate(\${panX}, \${panY}) scale(\${zoom})\`);
+                };
+                
+                window.zoomIn = () => {
+                    zoom = Math.min(zoom + 0.2, 3);
+                    updateTransform();
+                };
+                
+                window.zoomOut = () => {
+                    zoom = Math.max(zoom - 0.2, 0.5);
+                    updateTransform();
+                };
+                
+                window.resetZoom = () => {
+                    zoom = 1;
+                    panX = 0;
+                    panY = 0;
+                    updateTransform();
+                };
+                
+                const wrapper = document.querySelector('.graph-wrapper');
+                wrapper.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    const zoomDelta = e.deltaY > 0 ? -0.1 : 0.1;
+                    zoom = Math.min(Math.max(zoom + zoomDelta, 0.5), 3);
+                    updateTransform();
+                }, { passive: false });
+                
+                svg.addEventListener('mousedown', (e) => {
+                    isPanning = true;
+                    startX = e.clientX - panX;
+                    startY = e.clientY - panY;
+                    svg.style.cursor = 'grabbing';
+                });
+                
+                document.addEventListener('mousemove', (e) => {
+                    if (isPanning) {
+                        panX = e.clientX - startX;
+                        panY = e.clientY - startY;
+                        updateTransform();
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isPanning = false;
+                    svg.style.cursor = 'grab';
+                });
+                
+                svg.style.cursor = 'grab';
+            }
+        }, 500);
+    </script>
+</body>
+</html>
+    `;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+}
+
 // Display calculation results
 function displayResults(result, productId) {
     const resultsSection = document.getElementById('results');
@@ -357,6 +662,10 @@ function displayResults(result, productId) {
     
     statusHTML += `<p class="status-details">Target: <strong>${result.requestedQuantity} units</strong> in <strong>${result.timeAvailable} time units</strong></p>`;
     statusDiv.innerHTML = statusHTML;
+
+    // Display material flow graph
+    const graphDiv = document.getElementById('materialFlowGraph');
+    displayMaterialFlowGraph(result, graphDiv);
 
     // Build allocation view first (has properly aggregated quantities)
     const allocations = buildProductAllocations(result);
