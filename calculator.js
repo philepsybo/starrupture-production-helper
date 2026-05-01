@@ -2,6 +2,20 @@
 let productsData = [];
 let facilitiesData = [];
 
+// Scroll to a card by product name
+function scrollToCard(productName) {
+    // Find the card with the matching product name
+    const cards = document.querySelectorAll('.allocation-card');
+    for (let card of cards) {
+        const productHeader = card.querySelector('.allocation-product');
+        if (productHeader && productHeader.textContent === productName) {
+            // Scroll the card into view
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+    }
+}
+
 // Initialize the calculator
 document.addEventListener('DOMContentLoaded', async () => {
     await loadFacilities();
@@ -347,6 +361,10 @@ function displayResults(result, productId) {
     // Build allocation view first (has properly aggregated quantities)
     const allocations = buildProductAllocations(result);
     const allFacilities = calculateFacilitiesFromAllocations(allocations, result.timeAvailable, result);
+    
+    // Debug: Log facility calculation results
+    const totalFacilitiesCount = Object.values(allFacilities).reduce((sum, fac) => sum + fac.totalCount, 0);
+    console.log(`calculateFacilitiesFromAllocations found ${totalFacilitiesCount} facilities`);
     
     // Calculate total facility construction cost
     const facilityCost = calculateFacilityCost(allFacilities);
@@ -866,7 +884,9 @@ function buildProductAllocationView(result, allocations) {
         
         // Display input materials if any
         if (inputMaterials.size > 0) {
-            const inputList = Array.from(inputMaterials).sort().join(', ');
+            const inputList = Array.from(inputMaterials).sort()
+                .map(mat => `<a class="material-link" onclick="scrollToCard('${mat.replace(/'/g, "\\'")}'); return false;" href="#${mat.replace(/[^a-zA-Z0-9]/g, '_')}">${mat}</a>`)
+                .join(', ');
             html += `<div class="input-materials">Requires: ${inputList}</div>`;
         }
         
@@ -894,7 +914,7 @@ function buildProductAllocationView(result, allocations) {
                 const pct = percent(consumerData.amount, alloc.totalQuantity);
                 html += `<div class="consumer-item">`;
                 html += `<div class="consumer-info">`;
-                html += `<span class="consumer-name">${consumer}</span>`;
+                html += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}">${consumer}</a>`;
                 html += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units (${pct}%)</span>`;
                 
                 // Show which facilities consume this product
