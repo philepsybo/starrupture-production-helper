@@ -33,6 +33,46 @@ export function displayResults(result, productId) {
     const facilities = calculateFacilitiesFromAllocations(allocations, result.timeAvailable, result);
     const facilityCost = calculateFacilityCost(facilities);
 
+    // First pass: build a map of product name -> chosen {facilityName, count}
+    const producedByMap = {};
+    Object.entries(allocations).forEach(([productName, alloc]) => {
+        const product = productsData.find(p => p.name === productName);
+        let producingFacilities = [];
+        if (product && product.producedIn) {
+            if (product.producedIn.length > 1) {
+                const alternatives = product.producedIn.map(facility => {
+                    const cycles = result.timeAvailable / facility.takesTime;
+                    const amountPerCycle = facility.amountProduced || 1;
+                    const unitsPerFacility = cycles * amountPerCycle;
+                    const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
+                    return {
+                        id: facility.id,
+                        name: getFacilityName(facility.id),
+                        count: facilitiesNeeded
+                    };
+                });
+                const best = alternatives.reduce((prev, curr) => curr.count < prev.count ? curr : prev);
+                producingFacilities = [best];
+            } else {
+                product.producedIn.forEach(facility => {
+                    const cycles = result.timeAvailable / facility.takesTime;
+                    const amountPerCycle = facility.amountProduced || 1;
+                    const unitsPerFacility = cycles * amountPerCycle;
+                    const facilitiesNeeded = unitsPerFacility > 0 ? Math.ceil(alloc.totalQuantity / unitsPerFacility) : 0;
+                    producingFacilities.push({
+                        id: facility.id,
+                        name: getFacilityName(facility.id),
+                        count: facilitiesNeeded
+                    });
+                });
+            }
+        }
+        producedByMap[productName] = producingFacilities;
+    });
+
+    console.log(producedByMap);
+    
+
     // Facilities summary as a compact list
     let facilitiesHTML = '<h3>Facilities Needed</h3>';
     facilitiesHTML += '<ul class="facilities-list-compact">';
@@ -153,11 +193,16 @@ export function displayResults(result, productId) {
             const pct = ((consumerData.amount / alloc.totalQuantity) * 100).toFixed(1);
             allocationsHTML += `<div class="consumer-item">`;
             allocationsHTML += `<div class="consumer-info">`;
-            allocationsHTML += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;\" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}\">${consumer}</a>`;
+            allocationsHTML += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}">${consumer}</a>`;
             allocationsHTML += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units (${pct}%)</span>`;
-            if (consumerData.facilities.length > 0) {
-                allocationsHTML += consumerData.facilities.map(fac => `<span class="consumer-facility-badge">${fac.name} (×${fac.count})</span>`).join('');
+            // Always use the facility count from producedByMap for the consumer product
+            let consumerFacilityBadges = '';
+            if (producedByMap[consumer] && producedByMap[consumer].length > 0) {
+                producedByMap[consumer].forEach(facility => {
+                    consumerFacilityBadges += `<span class=\"consumer-facility-badge\">${facility.name} (×${facility.count})</span>`;
+                });
             }
+            allocationsHTML += consumerFacilityBadges;
             allocationsHTML += `</div>`;
             allocationsHTML += `</div>`;
         });
