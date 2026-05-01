@@ -578,7 +578,7 @@ function displayResults(result, productId) {
     
     // Debug: Log facility calculation results
     const totalFacilitiesCount = Object.values(allFacilities).reduce((sum, fac) => sum + fac.totalCount, 0);
-    console.log(`calculateFacilitiesFromAllocations found ${totalFacilitiesCount} facilities`);
+    console.log(`Total facilities needed: ${totalFacilitiesCount}`);
     
     // Calculate total facility construction cost
     const facilityCost = calculateFacilityCost(allFacilities);
@@ -689,7 +689,6 @@ function buildProductAllocations(result) {
                 facilityId: chosenFacility.id,
                 count: chosenFacility.facilitiesNeeded
             };
-            console.log(`Extracted from result tree: ${node.productName} -> ${chosenFacility.id} ×${chosenFacility.facilitiesNeeded}`);
         }
         if (node && node.productName && node.chosenFacility) {
             productToFacility[node.productName] = node.chosenFacility.id;
@@ -705,8 +704,6 @@ function buildProductAllocations(result) {
     }
     
     extractProductFacilities(result);
-    
-    console.log('productFacilityMap:', productFacilityMap);
     
     // Second pass: build allocations with proper consumer-to-facility mapping
     function collectAllocations(node) {
@@ -751,7 +748,6 @@ function buildProductAllocations(result) {
                         name: getFacilityName(facilityInfo.facilityId),
                         count: facilityInfo.count
                     });
-                    console.log(`Added to ${productName} -> ${consumer}: ${getFacilityName(facilityInfo.facilityId)} ×${facilityInfo.count} (from result tree)`);
                 }
             }
         });
