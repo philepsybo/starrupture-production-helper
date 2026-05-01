@@ -150,10 +150,11 @@ export function displayResults(result, productId) {
         // Show distribution to consumers
         allocationsHTML += `<div class="allocation-distribution"><span class="allocation-label">Distributed to:</span><div class="consumer-breakdown">`;
         Object.entries(alloc.consumers).forEach(([consumer, consumerData]) => {
+            const pct = ((consumerData.amount / alloc.totalQuantity) * 100).toFixed(1);
             allocationsHTML += `<div class="consumer-item">`;
             allocationsHTML += `<div class="consumer-info">`;
             allocationsHTML += `<a class="material-link consumer-name" onclick="scrollToCard('${consumer.replace(/'/g, "\\'")}'); return false;\" href="#${consumer.replace(/[^a-zA-Z0-9]/g, '_')}\">${consumer}</a>`;
-            allocationsHTML += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units</span>`;
+            allocationsHTML += `<span class="consumer-amount">${consumerData.amount.toFixed(1)} units (${pct}%)</span>`;
             if (consumerData.facilities.length > 0) {
                 allocationsHTML += consumerData.facilities.map(fac => `<span class="consumer-facility-badge">${fac.name} (×${fac.count})</span>`).join('');
             }
