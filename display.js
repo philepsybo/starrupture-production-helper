@@ -129,9 +129,8 @@ export function displayResults(result, productId) {
         allocationsHTML += `<span class="allocation-product">${productName}</span>`;
         // Show input materials for the actual chosen facility
         const product = productsData.find(p => p.name === productName);
-        let inputMaterials = new Set();
+        let inputMaterials = [];
         let chosenFacilityId = null;
-        // Find the chosen facility for this product (from producingFacilities or producedByMap)
         if (producedByMap[productName] && producedByMap[productName].length > 0) {
             chosenFacilityId = producedByMap[productName][0].id;
         }
@@ -142,21 +141,32 @@ export function displayResults(result, productId) {
             } else {
                 chosenFacility = product.producedIn[0];
             }
-            if (chosenFacility && chosenFacility.requires) {
+            if (chosenFacility && chosenFacility.requires && chosenFacility.amountProduced) {
+                // Calculate how many cycles are needed to produce alloc.totalQuantity
+                const cyclesNeeded = alloc.totalQuantity / chosenFacility.amountProduced;
                 chosenFacility.requires.forEach(req => {
-                    const inputProductName = productsData.find(p => p.id === req.productId)?.name;
-                    if (inputProductName) inputMaterials.add(inputProductName);
+                    const inputProduct = productsData.find(p => p.id === req.productId);
+                    if (inputProduct) {
+                        // Total required = per-cycle quantity * cycles needed
+                        const totalRequired = req.quantity * cyclesNeeded;
+                        inputMaterials.push({
+                            name: inputProduct.name,
+                            quantity: req.quantity,
+                            totalRequired: totalRequired
+                        });
+                    }
                 });
             }
         }
-        if (inputMaterials.size > 0) {
-            const inputList = Array.from(inputMaterials).sort()
-                .map(mat => `<a class="material-link" onclick="scrollToCard('${mat.replace(/'/g, "\\'")}'); return false;" href="#${mat.replace(/[^a-zA-Z0-9]/g, '_')}">${mat}</a>`)
+        if (inputMaterials.length > 0) {
+            inputMaterials.sort((a, b) => a.name.localeCompare(b.name));
+            const inputList = inputMaterials
+                .map(mat => `<a class="material-link" onclick="scrollToCard('${mat.name.replace(/'/g, "\\'")}'); return false;" href="#${mat.name.replace(/[^a-zA-Z0-9]/g, '_')}">${mat.name}</a> ×${mat.totalRequired % 1 === 0 ? mat.totalRequired : mat.totalRequired.toFixed(2)}`)
                 .join(', ');
             allocationsHTML += `<div class="input-materials">Requires: ${inputList}</div>`;
         }
-        allocationsHTML += `</div>`; // close product-info
         allocationsHTML += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units</span>`;
+        allocationsHTML += `</div>`; // close product-info
         allocationsHTML += `</div>`; // close allocation-header
         // Show producers with per-product counts
         allocationsHTML += `<div class="allocation-producers"><span class="allocation-label">Produced by:</span> `;
