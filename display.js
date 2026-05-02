@@ -127,12 +127,21 @@ export function displayResults(result, productId) {
         allocationsHTML += `<div class="allocation-header">`;
         allocationsHTML += `<div class="product-info">`;
         allocationsHTML += `<span class="allocation-product">${productName}</span>`;
-        // Show input materials below the product name
+        // Show input materials for the actual chosen facility
         const product = productsData.find(p => p.name === productName);
         let inputMaterials = new Set();
+        let chosenFacilityId = null;
+        // Find the chosen facility for this product (from producingFacilities or producedByMap)
+        if (producedByMap[productName] && producedByMap[productName].length > 0) {
+            chosenFacilityId = producedByMap[productName][0].id;
+        }
+        let chosenFacility = null;
         if (product && product.producedIn && product.producedIn.length > 0) {
-            // Use the best/first facility for this product
-            const chosenFacility = product.producedIn[0];
+            if (chosenFacilityId) {
+                chosenFacility = product.producedIn.find(fac => fac.id === chosenFacilityId) || product.producedIn[0];
+            } else {
+                chosenFacility = product.producedIn[0];
+            }
             if (chosenFacility && chosenFacility.requires) {
                 chosenFacility.requires.forEach(req => {
                     const inputProductName = productsData.find(p => p.id === req.productId)?.name;
