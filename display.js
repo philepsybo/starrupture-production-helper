@@ -126,7 +126,10 @@ export function displayResults(result, productId) {
         allocationsHTML += `<div class="allocation-card">`;
         allocationsHTML += `<div class="allocation-header">`;
         allocationsHTML += `<div class="product-info">`;
+        allocationsHTML += `<div class="product-header-row">`;
         allocationsHTML += `<span class="allocation-product">${productName}</span>`;
+        allocationsHTML += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units</span>`;
+        allocationsHTML += `</div>`; // close product-header-row
         // Show input materials for the actual chosen facility
         const product = productsData.find(p => p.name === productName);
         let inputMaterials = [];
@@ -165,7 +168,6 @@ export function displayResults(result, productId) {
                 .join(', ');
             allocationsHTML += `<div class="input-materials">Requires: ${inputList}</div>`;
         }
-        allocationsHTML += `<span class="allocation-total">${alloc.totalQuantity.toFixed(1)} units</span>`;
         allocationsHTML += `</div>`; // close product-info
         allocationsHTML += `</div>`; // close allocation-header
         // Show producers with per-product counts
