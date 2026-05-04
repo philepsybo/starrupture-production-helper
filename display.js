@@ -225,29 +225,23 @@ export function displayResults(result, productId) {
             allocationsHTML += `</div>`;
         });
         allocationsHTML += `</div></div>`;
-        // Initialize checklistState for each card
-        let checklistState = {fac: false, sto: false, inb: false, out: false};
-        try {
-            const saved = localStorage.getItem(`starrupture_card_checkboxes_${productName}`);
-            if (saved) checklistState = JSON.parse(saved);
-        } catch {}
         allocationsHTML += `<ul class="card-progress" data-product="${productName}">
             <span class="progress-title">Progress Checklist</span>
             <div class="checkbox-group">
                 <div class="checkbox-item">
-                    <input type="checkbox" class="card-checkbox" data-type="fac" id="fac-${productName}" ${checklistState && checklistState.fac ? 'checked' : ''}/>
+                    <input type="checkbox" class="card-checkbox" data-type="fac" id="fac-${productName}" />
                     <label for="fac-${productName}">build facilities</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" class="card-checkbox" data-type="sto" id="sto-${productName}" ${checklistState && checklistState.sto ? 'checked' : ''}/>
+                    <input type="checkbox" class="card-checkbox" data-type="sto" id="sto-${productName}" />
                     <label for="sto-${productName}">build storage</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" class="card-checkbox" data-type="inb" id="inb-${productName}" ${checklistState && checklistState.inb ? 'checked' : ''}/>
+                    <input type="checkbox" class="card-checkbox" data-type="inb" id="inb-${productName}" />
                     <label for="inb-${productName}">build inbound transportation</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" class="card-checkbox" data-type="out" id="out-${productName}" ${checklistState && checklistState.out ? 'checked' : ''}/>
+                    <input type="checkbox" class="card-checkbox" data-type="out" id="out-${productName}" />
                     <label for="out-${productName}">build outbound transportation</label>
                 </div>
             </div>
